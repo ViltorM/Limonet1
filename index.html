@@ -90,7 +90,7 @@
     </div>
   </footer>
 
- <script>
+  <script>
   // Добавляем иконки для полей формы + убираем вторую галочку при выборе оплаты
   document.addEventListener('DOMContentLoaded', function() {
     const addIcon = (selector, iconCode) => {
@@ -100,7 +100,7 @@
         wrapper.className = 'input-with-icon';
         input.parentNode.insertBefore(wrapper, input);
         wrapper.appendChild(input);
-        
+
         wrapper.insertAdjacentHTML('afterbegin', 
           `<span class="input-icon">${iconCode}</span>`);
       }
@@ -118,10 +118,10 @@
         const placeholder = paymentSelect.querySelector('option[value=""]');
         if (placeholder) {
           placeholder.remove(); // Удаляем лишнюю строку => убирается вторая галочка
-          }
-        });
-      }
-    });
+        }
+      });
+    }
+  });
   </script>
 </body>
 </html>
