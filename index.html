@@ -91,26 +91,37 @@
   </footer>
 
   <script>
-    // Добавляем иконки для полей формы
-    document.addEventListener('DOMContentLoaded', function() {
-      const addIcon = (selector, iconCode) => {
-        const input = document.querySelector(selector);
-        if (input) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'input-with-icon';
-          input.parentNode.insertBefore(wrapper, input);
-          wrapper.appendChild(input);
-          
-          wrapper.insertAdjacentHTML('afterbegin', 
-            `<span class="input-icon">${iconCode}</span>`);
+  // Добавляем иконки для полей формы
+  document.addEventListener('DOMContentLoaded', function() {
+    const addIcon = (selector, iconCode) => {
+      const input = document.querySelector(selector);
+      if (input) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'input-with-icon';
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+
+        wrapper.insertAdjacentHTML('afterbegin', 
+          `<span class="input-icon">${iconCode}</span>`);
+      }
+    };
+
+    addIcon('input[name="fio"]', '👤');
+    addIcon('input[name="phone"]', '📱');
+    addIcon('input[name="city"]', '🏙️');
+    addIcon('input[name="post"]', '📮');
+
+    // Убираем selected у скрытого пункта способа оплаты
+    const paymentSelect = document.querySelector('select[name="payment"]');
+    if (paymentSelect) {
+      paymentSelect.addEventListener('change', function () {
+        const placeholder = this.querySelector('option[value=""]');
+        if (placeholder && placeholder.hasAttribute('selected')) {
+          placeholder.removeAttribute('selected');
         }
-      };
-      
-      addIcon('input[name="fio"]', '👤');
-      addIcon('input[name="phone"]', '📱');
-      addIcon('input[name="city"]', '🏙️');
-      addIcon('input[name="post"]', '📮');
-    });
+      });
+    }
+  });
   </script>
 </body>
 </html>
