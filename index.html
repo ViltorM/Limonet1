@@ -4,22 +4,497 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Limonet</title>
-  <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
   <script defer src="translations.js"></script>
   <script defer src="script.js"></script>
   <style>
-    /* Добавляем стили для решения проблемы с галочками */
-    select option:first-child[disabled] {
+    /* Базовые стили */
+    body {
+      font-family: Arial, sans-serif;
+      background: #fffce8;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #d4edc9;
+      padding: 10px;
+      text-align: center;
+    }
+    .site-title {
+      font-family: 'Berkshire Swash', cursive;
+      font-size: 36px;
+      margin: 0;
+    }
+    .site-subtitle {
+      font-size: 16px;
+      margin: 5px 0 10px;
+    }
+    .lang-switcher {
+      margin-top: 5px;
+    }
+
+    /* Баннер рекомендуемых товаров */
+    .featured-banner {
+      background: #e8f5e9;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      display: none; /* По умолчанию скрыт */
+    }
+
+    .featured-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .featured-items {
+      display: flex;
+      overflow-x: auto;
+      gap: 15px;
+      padding: 10px 0;
+      scroll-behavior: smooth;
+    }
+
+    .featured-item {
+      flex: 0 0 auto;
+      width: 180px;
+      background: white;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .featured-item img {
+      max-width: 100%;
+      border-radius: 5px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .featured-controls button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Переключатели вида товаров */
+    .view-options {
+      display: flex;
+      justify-content: flex-end;
+      margin: 10px 20px;
+      gap: 8px;
+    }
+
+    .view-option {
+      background: #e0e0e0;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .view-option.active {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .view-option svg {
+      fill: currentColor;
+    }
+
+    /* Стили для товаров */
+    .products {
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px 20px;
+      flex: 1;
+    }
+
+    .category-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .category-container.list-view {
+      display: block;
+    }
+
+    .category-container.horizontal-view {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 15px;
+    }
+
+    .category-container.horizontal-view .product-card {
+      flex: 0 0 auto;
+      width: 260px;
+      margin-right: 15px;
+    }
+
+    .category-container.horizontal-view .category-title {
+      display: none;
+    }
+
+    .category-title {
+      grid-column: 1 / -1;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #4CAF50;
+    }
+
+    .product-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+      margin-bottom: 20px;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .product-card h4 {
+      margin: 10px 0 5px;
+      min-height: 40px;
+    }
+
+    .product-card .description {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+      min-height: 60px;
+    }
+
+    /* Унифицированные кнопки */
+    .btn-primary {
+      background: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #45a049;
+    }
+
+    /* Кнопки +/- */
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .quantity-input {
+      width: 40px;
+      text-align: center;
+      margin: 0 8px;
+      padding: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    /* Корзина */
+    .cart-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      gap: 30px;
+      flex: 1;
+    }
+    .cart, .order-form {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      gap: 10px;
+    }
+
+    .cart-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .cart-item .item-info {
+      flex: 1;
+    }
+
+    .cart-item .item-controls {
+      display: flex;
+      align-items: center;
+    }
+
+    .cart-item .quantity-controls {
+      margin: 0 10px;
+    }
+
+    #cart-items {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    #cart-total {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    /* Форма заказа */
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-row input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .input-with-icon {
+      position: relative;
+      width: 100%;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .order-form input,
+    .order-form select,
+    .order-form textarea,
+    .order-form button {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 15px 12px 45px;
+      font-size: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: all 0.3s;
+    }
+
+    .order-form select {
+      padding-left: 15px;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+    .order-form input:focus,
+    .order-form select:focus,
+    .order-form textarea:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+      outline: none;
+    }
+
+    .order-form textarea {
+      min-height: 100px;
+      resize: vertical;
+      padding-left: 15px;
+    }
+
+    /* Компактный футер */
+    footer {
+      background: #d4edc9;
+      padding: 8px 5px;
+      text-align: center;
+      font-size: 0.9em;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    footer .separator {
+      color: rgba(0,0,0,0.3);
+    }
+
+    .admin-link {
+      color: #2c3e50;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .admin-link:hover {
+      color: #3498db;
+      text-decoration: underline;
+    }
+
+    /* Адаптация для мобильных */
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .cart-wrapper {
+        flex-direction: column;
+      }
+      
+      .cart, .order-form {
+        width: 100%;
+      }
+      
+      .input-icon {
+        left: 12px;
+        font-size: 16px;
+      }
+      
+      .order-form input,
+      .order-form select,
+      .order-form textarea,
+      .order-form button {
+        padding-left: 40px;
+        font-size: 14px;
+      }
+      
+      /* Адаптация футера для мобильных */
+      footer {
+        padding: 6px 5px;
+        font-size: 0.85em;
+      }
+      
+      .footer-content {
+        gap: 8px;
+      }
+      
+      .view-options {
+        margin: 10px;
+        justify-content: center;
+      }
+      
+      .featured-item {
+        width: 160px;
+      }
+      
+      .product-card {
+        padding: 15px;
+      }
+    }
+
+    /* Отступы для карточек */
+    .category-container.horizontal-view .product-card {
+      margin-right: 20px;
+      margin-bottom: 0;
+    }
+
+    .category-container.list-view .product-card {
+      margin-bottom: 20px;
+    }
+
+    /* Стили для решения проблемы с выбором оплаты */
+    select[name="payment"] option[disabled] {
       display: none;
     }
     
-    select:invalid {
-      color: #6c757d; /* Серый цвет для placeholder */
+    select[name="payment"]:invalid {
+      color: #6c757d;
     }
     
-    select option:not([disabled]) {
-      color: #000; /* Черный цвет для обычных опций */
+    select[name="payment"]:valid {
+      color: #000;
+    }
+    
+    /* Улучшенный стиль для выпадающего списка */
+    select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #fff;
+      font-size: 16px;
+      margin-bottom: 15px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 16px;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
     }
   </style>
 </head>
@@ -81,7 +556,7 @@
             <input type="text" name="post" placeholder="Відділення пошти" required data-translate-placeholder="post_placeholder" />
           </div>
           
-          <!-- Исправленный блок выбора оплаты с восстановленной подсказкой -->
+          <!-- Исправленный блок выбора оплаты -->
           <select name="payment" required>
             <option value="" disabled selected data-translate="choose_payment">Оберіть спосіб оплати</option>
             <option value="card" data-translate="card_payment">На картку</option>
@@ -126,14 +601,22 @@
       addIcon('input[name="city"]', '🏙️');
       addIcon('input[name="post"]', '📮');
       
-      // Решение проблемы с двойной галочкой
+      // Решение проблемы с выбором оплаты
       const paymentSelect = document.querySelector('select[name="payment"]');
+      
+      // Инициализация: если ничего не выбрано, показываем placeholder
+      if (!paymentSelect.value) {
+        paymentSelect.selectedIndex = 0;
+      }
       
       // При изменении выбора
       paymentSelect.addEventListener('change', function() {
         // Удаляем атрибут selected у placeholder после выбора
         if (this.value) {
-          this.querySelector('option[disabled]').removeAttribute('selected');
+          const placeholderOption = this.querySelector('option[disabled]');
+          if (placeholderOption) {
+            placeholderOption.removeAttribute('selected');
+          }
         }
       });
       
@@ -141,7 +624,10 @@
       document.getElementById('order-form').addEventListener('submit', function() {
         // Гарантируем, что placeholder не будет выбран
         if (paymentSelect.value) {
-          paymentSelect.querySelector('option[disabled]').removeAttribute('selected');
+          const placeholderOption = paymentSelect.querySelector('option[disabled]');
+          if (placeholderOption) {
+            placeholderOption.removeAttribute('selected');
+          }
         }
       });
     });
