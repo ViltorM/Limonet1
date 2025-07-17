@@ -67,10 +67,11 @@
             <input type="text" name="post" placeholder="Відділення пошти" required data-translate-placeholder="post_placeholder" />
           </div>
           
+          <!-- Исправленный блок выбора оплаты -->
           <select name="payment" required>
-             <option value="" disabled selected hidden data-translate="choose_payment">Оберіть спосіб оплати</option>
-             <option value="card" data-translate="card_payment">На картку</option>
-             <option value="cod" data-translate="cod_payment">Накладений платіж</option>
+            <option value="" disabled hidden data-translate="choose_payment">Оберіть спосіб оплати</option>
+            <option value="card" data-translate="card_payment">На картку</option>
+            <option value="cod" data-translate="cod_payment">Накладений платіж</option>
           </select>
           
           <textarea name="comment" placeholder="Коментар..." data-translate-placeholder="comment_placeholder"></textarea>
@@ -90,7 +91,7 @@
     </div>
   </footer>
 
- <script>
+  <script>
     // Добавляем иконки для полей формы
     document.addEventListener('DOMContentLoaded', function() {
       const addIcon = (selector, iconCode) => {
@@ -111,11 +112,6 @@
       addIcon('input[name="city"]', '🏙️');
       addIcon('input[name="post"]', '📮');
     });
-  </script>
-</body>
-</html>
-
-  });
   </script>
 </body>
 </html>
