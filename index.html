@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ua">
 <head>
   <meta charset="UTF-8" />
@@ -90,37 +90,31 @@
     </div>
   </footer>
 
-  <script>
-  // Добавляем иконки для полей формы + убираем вторую галочку при выборе оплаты
-  document.addEventListener('DOMContentLoaded', function() {
-    const addIcon = (selector, iconCode) => {
-      const input = document.querySelector(selector);
-      if (input) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'input-with-icon';
-        input.parentNode.insertBefore(wrapper, input);
-        wrapper.appendChild(input);
-
-        wrapper.insertAdjacentHTML('afterbegin', 
-          `<span class="input-icon">${iconCode}</span>`);
-      }
-    };
-
-    addIcon('input[name="fio"]', '👤');
-    addIcon('input[name="phone"]', '📱');
-    addIcon('input[name="city"]', '🏙️');
-    addIcon('input[name="post"]', '📮');
-
-    // 🔥 Удаляем скрытый placeholder после выбора способа оплаты
-    const paymentSelect = document.querySelector('select[name="payment"]');
-    if (paymentSelect) {
-      paymentSelect.addEventListener('change', () => {
-        const placeholder = paymentSelect.querySelector('option[value=""]');
-        if (placeholder) {
-          placeholder.remove(); // Удаляем лишнюю строку => убирается вторая галочка
+ <script>
+    // Добавляем иконки для полей формы
+    document.addEventListener('DOMContentLoaded', function() {
+      const addIcon = (selector, iconCode) => {
+        const input = document.querySelector(selector);
+        if (input) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'input-with-icon';
+          input.parentNode.insertBefore(wrapper, input);
+          wrapper.appendChild(input);
+          
+          wrapper.insertAdjacentHTML('afterbegin', 
+            `<span class="input-icon">${iconCode}</span>`);
         }
-      });
-    }
+      };
+      
+      addIcon('input[name="fio"]', '👤');
+      addIcon('input[name="phone"]', '📱');
+      addIcon('input[name="city"]', '🏙️');
+      addIcon('input[name="post"]', '📮');
+    });
+  </script>
+</body>
+</html>
+
   });
   </script>
 </body>
