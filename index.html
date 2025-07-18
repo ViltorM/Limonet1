@@ -1,147 +1,168 @@
 <!DOCTYPE html>
 <html lang="ua">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Limonet</title>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="translations.js"></script>
-  <script defer src="script.js"></script>
+  <!-- ... (head остается без изменений) ... -->
+  <style>
+    /* ... (остальные стили без изменений) ... */
+
+    /* ========== ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ РЕЖИМОВ ПРОСМОТРА ========== */
+    .products {
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px 20px;
+      flex: 1;
+    }
+
+    .category-container {
+      margin-bottom: 50px;
+    }
+
+    .category-title {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #4CAF50;
+      font-size: 1.5em;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Общий контейнер для продуктов */
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px; /* Фиксированные отступы во всех режимах */
+    }
+
+    /* ========== РЕЖИМ СЕТКИ ========== */
+    .grid-view .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .grid-view .product-card {
+      width: 280px;
+    }
+
+    /* ========== РЕЖИМ ГОРИЗОНТАЛЬНО ========== */
+    .horizontal-view .products-container {
+      display: flex;
+      overflow-x: auto;
+      padding: 15px 5px 30px;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+    }
+
+    .horizontal-view .product-card {
+      flex: 0 0 auto;
+      width: 320px; /* Увеличиваем ширину для горизонтального режима */
+      margin-right: 15px; /* Добавляем отступ между карточками */
+    }
+
+    /* ========== РЕЖИМ СПИСКА ========== */
+    .list-view .products-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      margin: 0 auto;
+      gap: 25px; /* Добавляем отступы между карточками */
+    }
+
+    .list-view .product-card {
+      width: 100%;
+      max-width: 600px;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      padding: 20px;
+    }
+
+    .list-view .product-card img {
+      width: 120px;
+      height: 120px;
+      margin-right: 20px;
+      margin-bottom: 0;
+    }
+
+    .list-view .product-info {
+      flex: 1;
+    }
+
+    /* ОБЩИЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ */
+    .product-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ... (остальные стили без изменений) ... */
+  </style>
 </head>
 <body>
-  <header>
-    <h1 class="site-title">Limonet</h1>
-    <p class="site-subtitle" data-translate="logoSubtitle"></p>
-    <div class="lang-switcher">
-      <button onclick="setLang('ua')">UA</button>
-      <button onclick="setLang('ru')">RU</button>
-    </div>
-  </header>
-
-  <main>
-    <!-- Баннер ротации товаров -->
-    <section id="featured-products" class="featured-banner">
-      <div class="featured-header">
-        <h2 data-translate="featured_products">Рекомендуємо</h2>
-        <div class="featured-controls">
-          <button id="prev-featured">←</button>
-          <button id="next-featured">→</button>
-        </div>
-      </div>
-      <div class="featured-items"></div>
-    </section>
-
-    <!-- Переключатели вида товаров -->
-    <div class="view-options">
-      <button class="view-option active" data-view="grid" title="Сітка">
-        <svg width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      </button>
-      <button class="view-option" data-view="list" title="Список">
-        <svg width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="2"/><rect x="3" y="11" width="18" height="2"/><rect x="3" y="18" width="18" height="2"/></svg>
-      </button>
-      <button class="view-option" data-view="horizontal" title="Горизонтально">
-        <svg width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="6"/><rect x="3" y="10" width="18" height="6"/><rect x="3" y="17" width="18" height="6"/></svg>
-      </button>
-    </div>
-
-    <section class="products" id="products"></section>
-
-    <section class="cart-wrapper">
-      <div class="cart">
-        <h2>🛒 <span data-translate="cart_title">Кошик</span></h2>
-        <ul id="cart-items"></ul>
-        <p><span data-translate="total">Сума</span>: <span id="cart-total">0</span> грн</p>
-      </div>
-
-      <div class="order-form">
-        <h2 data-translate="place_order">Оформити замовлення</h2>
-        <form id="order-form">
-          <div class="form-row">
-            <input type="text" name="fio" placeholder="ПІБ" required data-translate-placeholder="fio_placeholder" />
-            <input type="tel" name="phone" placeholder="Телефон" required data-translate-placeholder="phone_placeholder" />
-          </div>
-          
-          <div class="form-row">
-            <input type="text" name="city" placeholder="Населений пункт" required data-translate-placeholder="city_placeholder" />
-            <input type="text" name="post" placeholder="Відділення пошти" required data-translate-placeholder="post_placeholder" />
-          </div>
-          
-          <!-- Исправленный блок выбора оплаты -->
-          <select name="payment" required>
-            <option value="" disabled selected data-translate="choose_payment">Оберіть спосіб оплати</option>
-            <option value="card" data-translate="card_payment">На картку</option>
-            <option value="cod" data-translate="cod_payment">Накладений платіж</option>
-          </select>
-          
-          <textarea name="comment" placeholder="Коментар..." data-translate-placeholder="comment_placeholder"></textarea>
-          
-          <button type="submit" class="btn-primary" data-translate="submit_order">Надіслати замовлення</button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <!-- Компактный футер -->
-  <footer>
-    <div class="footer-content">
-      <span>&copy; 2025 Limonet</span>
-      <span class="separator">|</span>
-      <a href="admin.html" class="admin-link">Адмін-панель</a>
-    </div>
-  </footer>
+  <!-- ... (тело документа без изменений) ... -->
 
   <script>
-    // Добавляем иконки для полей формы
-    document.addEventListener('DOMContentLoaded', function() {
-      const addIcon = (selector, iconCode) => {
-        const input = document.querySelector(selector);
-        if (input) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'input-with-icon';
-          input.parentNode.insertBefore(wrapper, input);
-          wrapper.appendChild(input);
+    // ... (остальной JavaScript без изменений) ... 
+    
+    function renderProducts() {
+      const container = document.getElementById('products');
+      container.innerHTML = '';
+      
+      // Создаем контейнер для продуктов с классом текущего вида
+      const productsContainer = document.createElement('div');
+      productsContainer.className = `products-container ${currentView}-view`;
+      container.appendChild(productsContainer);
+      
+      products.forEach((category, catIndex) => {
+        // Добавляем заголовок категории
+        const title = document.createElement('h3');
+        title.className = 'category-title';
+        title.textContent = category.category[lang] || category.category;
+        container.appendChild(title);
+        
+        category.items.forEach((item, itemIndex) => {
+          if (item.status === "hidden") return;
           
-          wrapper.insertAdjacentHTML('afterbegin', 
-            `<span class="input-icon">${iconCode}</span>`);
-        }
-      };
-      
-      addIcon('input[name="fio"]', '👤');
-      addIcon('input[name="phone"]', '📱');
-      addIcon('input[name="city"]', '🏙️');
-      addIcon('input[name="post"]', '📮');
-      
-      // Решение проблемы с выбором оплаты
-      const paymentSelect = document.querySelector('select[name="payment"]');
-      
-      // Инициализация: если ничего не выбрано, показываем placeholder
-      if (!paymentSelect.value) {
-        paymentSelect.selectedIndex = 0;
-      }
-      
-      // При изменении выбора
-      paymentSelect.addEventListener('change', function() {
-        // Удаляем атрибут selected у placeholder после выбора
-        if (this.value) {
-          const placeholderOption = this.querySelector('option[disabled]');
-          if (placeholderOption) {
-            placeholderOption.removeAttribute('selected');
-          }
-        }
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          
+          const name = item.name[lang] || item.name;
+          const description = item.description?.[lang] || item.description || '';
+          
+          card.innerHTML = `
+            <img src="${item.image}" alt="${name}">
+            <h4>${name}</h4>
+            <div class="description">${description}</div>
+            <p>${item.price} грн</p>
+            <p>${item.status === 'soon' ? 'Очікується' : ''}</p>
+            
+            <div class="quantity-controls">
+              <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}">-</button>
+              <input type="number" min="1" value="1" class="quantity-input" 
+                     data-cat="${catIndex}" data-item="${itemIndex}">
+              <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}">+</button>
+            </div>
+            
+            <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}">
+              ${lang === 'ua' ? 'Додати в кошик' : 'Добавить в корзину'}
+            </button>
+          `;
+          productsContainer.appendChild(card);
+        });
       });
       
-      // При отправке формы
-      document.getElementById('order-form').addEventListener('submit', function() {
-        // Гарантируем, что placeholder не будет выбран
-        if (paymentSelect.value) {
-          const placeholderOption = paymentSelect.querySelector('option[disabled]');
-          if (placeholderOption) {
-            placeholderOption.removeAttribute('selected');
-          }
-        }
-      });
-    });
+      // ... (остальная часть функции без изменений) ...
+    }
   </script>
 </body>
 </html>
