@@ -161,7 +161,7 @@ header {
 .horizontal-view .product-card {
   width: 90%;              
   max-width: 800px;        
-  margin: 0 auto 30px;     /* Увеличили отступ снизу */
+  margin: 0 auto 30px;
   box-sizing: border-box;
 }
 
@@ -169,7 +169,7 @@ header {
 .horizontal-view .category-title {
   width: 90%;              
   max-width: 800px;        
-  margin: 0 auto 15px;     /* Увеличили отступ снизу */
+  margin: 0 auto 15px;
   font-size: 1.5em;        
   font-weight: bold;
   text-align: center;
@@ -201,21 +201,20 @@ header {
 }
 
 .list-view .product-card {
-  width: 90vw;              /* Занимает 90% ширины окна */
-  margin: 0 auto;           /* Центрируется по горизонтали */
+  width: 90vw;
+  margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
   min-height: 200px;
 }
 
 .list-view .product-card img {
   width: 120px;
   height: 120px;
-  margin: 0 20px;
+  margin: 0 20px 0 0;
   flex-shrink: 0;
   object-fit: cover;
   border-radius: 8px;
@@ -226,19 +225,19 @@ header {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .list-view .product-controls {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  width: 120px;
+  width: 150px;
   margin-left: 20px;
 }
 
-/* Горизонтальное расположение кнопок +/- */
+/* Вертикальное расположение кнопок +/- */
 .list-view .quantity-controls {
   display: flex;
   flex-direction: row;
@@ -262,6 +261,8 @@ header {
   margin-top: 0;
   width: 100%;
   max-width: 140px;
+  padding: 10px 5px;
+  font-size: 14px;
 }
 
 /* ОБЩИЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ */
@@ -345,6 +346,23 @@ header {
 .product-card .size-value {
   flex: 1;
   text-align: right;
+}
+
+/* Материал товара */
+.product-card .product-material {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-card .material-label {
+  font-weight: bold;
 }
 
 /* Стили для статуса товара */
@@ -668,22 +686,24 @@ footer .separator {
   }
   
   .list-view .product-card img {
-    margin-right: 0;
-    margin-bottom: 15px;
+    margin: 0 auto 15px;
   }
 
   .list-view .product-info {
     width: 100%;
+    align-items: center;
+    text-align: center;
   }
 
   .list-view .product-controls {
     width: 100%;
     margin-left: 0;
     margin-top: 15px;
+    align-items: center;
   }
 
-  .horizontal-view .product-card {
-    width: 280px;
+  .list-view .quantity-controls {
+    justify-content: center;
   }
   
   .product-card .size-item {
