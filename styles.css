@@ -181,14 +181,14 @@ header {
 }
 
 .list-view .product-card {
-  width: 100%;
-  max-width: 900px;
-  flex-direction: row;
-  align-items: flex-start; /* Выравнивание по верху */
-  text-align: left;
+  width: 90vw;              /* Занимает 90% ширины окна (viewport) */
+  margin: 0 auto;           /* Центрируется по горизонтали */
   padding: 20px;
   box-sizing: border-box;
-  min-height: 200px; /* Гарантирует минимальную высоту */
+  flex-direction: row;
+  align-items: flex-start;
+  text-align: left;
+  min-height: 200px;
 }
 
 .list-view .product-card img {
