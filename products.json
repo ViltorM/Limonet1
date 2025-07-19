@@ -14,7 +14,8 @@
           "ua": "Ідеальний для дрібних предметів",
           "ru": "Идеальный для мелких предметов"
         },
-        "size": "11×8×4",
+        "externalSize": "13×10×5 см",
+        "internalSize": "11×8×4 см",
         "price": 250,
         "image": "https://placehold.co/250x160?text=11x8x4",
         "status": "in_stock"
@@ -28,7 +29,8 @@
           "ua": "Для середнього розміру речей",
           "ru": "Для вещей среднего размера"
         },
-        "size": "13×10×4",
+        "externalSize": "15×12×6 см",
+        "internalSize": "13×10×4 см",
         "price": 270,
         "image": "https://placehold.co/250x160?text=13x10x4",
         "status": "soon"
@@ -50,7 +52,8 @@
           "ua": "Для великих предметів",
           "ru": "Для крупных предметов"
         },
-        "size": "15×11×5",
+        "externalSize": "17×14×7 см",
+        "internalSize": "15×11×5 см",
         "price": 290,
         "image": "https://placehold.co/250x160?text=15x11x5",
         "status": "out_of_stock"
