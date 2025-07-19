@@ -282,6 +282,15 @@ function renderProducts() {
         </div>
       ` : '';
 
+      // Добавляем отображение материала
+      const material = item.material?.[lang] || item.material || '';
+      const materialHtml = material ? `
+        <div class="product-material">
+          <span class="material-label">${translations[lang].material}:</span>
+          <span class="material-value">${material}</span>
+        </div>
+      ` : '';
+
       // Генерация HTML в зависимости от режима
       if (currentView === 'list') {
         card.innerHTML = `
@@ -292,23 +301,26 @@ function renderProducts() {
               <div class="description">${description}</div>
             </div>
             ${sizes}
+            ${materialHtml}
             <div class="control-group">
               ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
               <div class="product-price">${item.price} грн</div>
-              <div class="quantity-controls">
-                <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                        ${isDisabled ? 'disabled' : ''}>-</button>
-                <input type="number" min="1" value="1" class="quantity-input" 
-                       data-cat="${catIndex}" data-item="${itemIndex}" 
-                       ${isDisabled ? 'disabled' : ''}>
-                <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                        ${isDisabled ? 'disabled' : ''}>+</button>
-              </div>
-              <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
-                      ${isDisabled ? 'disabled' : ''}>
-                ${translations[lang].add_to_cart}
-              </button>
             </div>
+          </div>
+          <div class="product-controls">
+            <div class="quantity-controls">
+              <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                      ${isDisabled ? 'disabled' : ''}>-</button>
+              <input type="number" min="1" value="1" class="quantity-input" 
+                     data-cat="${catIndex}" data-item="${itemIndex}" 
+                     ${isDisabled ? 'disabled' : ''}>
+              <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                      ${isDisabled ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>
+              ${translations[lang].add_to_cart}
+            </button>
           </div>
         `;
       } else {
@@ -321,6 +333,7 @@ function renderProducts() {
           </div>
           
           ${sizes}
+          ${materialHtml}
           
           <div class="control-group">
             ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
@@ -397,7 +410,8 @@ function addToCart(catIndex, itemIndex, quantity) {
       name: product.name[lang] || product.name,
       image: product.image,
       externalSize: product.externalSize,
-      internalSize: product.internalSize
+      internalSize: product.internalSize,
+      material: product.material?.[lang] || product.material || ''
     });
   }
   
@@ -421,20 +435,20 @@ function renderCart() {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Добавляем отображение размеров в корзине, если они есть
+    // Добавляем отображение размеров и материала в корзине
     const sizeInfo = [];
     if (item.externalSize) sizeInfo.push(`${translations[lang].external_size}: ${item.externalSize}`);
     if (item.internalSize) sizeInfo.push(`${translations[lang].internal_size}: ${item.internalSize}`);
     
-    const sizeHtml = sizeInfo.length > 0 
-      ? `<div>${sizeInfo.join('<br>')}</div>` 
-      : '';
+    const materialInfo = item.material ? `${translations[lang].material}: ${item.material}` : '';
+    
+    const additionalHtml = [sizeInfo.join('<br>'), materialInfo].filter(Boolean).join('<br>');
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="item-info">
         <div>${item.name}</div>
-        ${sizeHtml}
+        ${additionalHtml ? `<div>${additionalHtml}</div>` : ''}
         <div>${item.price} грн × <span class="item-quantity">${item.quantity}</span></div>
       </div>
       <div class="item-controls">
