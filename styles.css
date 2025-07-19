@@ -141,6 +141,8 @@ header {
   align-items: center;
   gap: 50px;
   padding: 15px 0 30px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .horizontal-view .category-container {
