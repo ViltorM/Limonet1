@@ -121,65 +121,77 @@ header {
   margin-bottom: 50px;
 }
 
-.category-title {
-  text-align: center;
-  margin-bottom: 25px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #4CAF50;
-  font-size: 1.5em;
-  width: 90vw;
-  margin-left: auto;
-  margin-right: auto;
+/* ========== РЕЖИМ ГОРИЗОНТАЛЬНО (КАСТОМНЫЙ ВИД) ========== */
+.horizontal-view .products-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  padding: 15px 5px 30px;
 }
 
-/* Общий контейнер для продуктов */
-.products-container {
+.horizontal-view .category-container {
+  width: 100%;
+  max-width: 800px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.horizontal-view .category-title {
+  text-align: center;
+  margin: 0 auto 15px;
+  font-size: 1.8em;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 15px;
+  width: 90%;
+}
+
+/* Зеленая полоска под названием категории */
+.horizontal-view .category-title::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  height: 3px;
+  background: #4CAF50;
+  border-radius: 2px;
+}
+
+.horizontal-view .products-group {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.horizontal-view .product-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  padding: 25px;
+  border-radius: 15px;
+  box-sizing: border-box;
 }
 
 /* ========== РЕЖИМ СЕТКИ ========== */
+.grid-view .products-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
 .grid-view .products-group {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
   row-gap: 25px;
-}
-
-/* ========== РЕЖИМ ГОРИЗОНТАЛЬНО ========== */
-.horizontal-view .products-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
-  padding: 15px 5px 30px;
-}
-
-.horizontal-view .product-card {
-  width: 90%;              
-  max-width: 800px;        
-  margin: 0 auto 30px;
-  box-sizing: border-box;
-}
-
-/* Заголовок категории */
-.horizontal-view .category-title {
-  width: 90%;              
-  max-width: 800px;        
-  margin: 0 auto 15px;
-  font-size: 1.5em;        
-  font-weight: bold;
-  text-align: center;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #4CAF50;
-}
-
-/* Убираем дублирующую полоску */
-.horizontal-view .category-line {
-  display: none;
 }
 
 /* ========== РЕЖИМ СПИСКА ========== */
@@ -698,6 +710,14 @@ footer .separator {
   .product-card .size-item {
     flex-direction: column;
     gap: 3px;
+  }
+  
+  .horizontal-view .category-title {
+    font-size: 1.5em;
+  }
+  
+  .horizontal-view .product-card {
+    padding: 20px;
   }
 }
 
