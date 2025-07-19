@@ -138,6 +138,13 @@ header {
   gap: 25px;
 }
 
+.products-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
 /* ========== РЕЖИМ СЕТКИ ========== */
 .grid-view .products-container {
   display: flex;
