@@ -207,7 +207,7 @@ header {
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  align-items: center; /* Центрируем по вертикали */
+  align-items: center;
   min-height: 200px;
 }
 
@@ -218,7 +218,6 @@ header {
   flex-shrink: 0;
   object-fit: cover;
   border-radius: 8px;
-  align-self: center; /* Центрируем изображение */
 }
 
 .list-view .product-info {
@@ -237,13 +236,12 @@ header {
   margin-left: 20px;
 }
 
-/* Вертикальное расположение кнопок +/- */
 .list-view .quantity-controls {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 0 0 10px 0; /* Уменьшен отступ */
+  margin: 0 0 10px 0;
 }
 
 .list-view .quantity-btn {
@@ -321,7 +319,7 @@ header {
   width: 100%;
 }
 
-/* Размеры товара - ВЫРАВНЕНО ПО ЦЕНТРУ */
+/* Размеры товара */
 .product-card .product-sizes {
   display: flex;
   flex-direction: column;
