@@ -260,6 +260,9 @@ function renderProducts() {
       // Проверяем, доступен ли товар для заказа
       const isDisabled = item.status === 'out_of_stock';
       
+      // Добавляем отображение размера, если он есть
+      const size = item.size ? `<div class="product-size">${translations[lang].size}: ${item.size}</div>` : '';
+      
       // Генерация HTML в зависимости от режима
       if (currentView === 'list') {
         card.innerHTML = `
@@ -267,6 +270,7 @@ function renderProducts() {
           <div class="product-info">
             <h4>${name}</h4>
             <div class="description">${description}</div>
+            ${size}
             ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
             <p>${item.price} грн</p>
           </div>
@@ -291,6 +295,7 @@ function renderProducts() {
           <img src="${item.image}" alt="${name}">
           <h4>${name}</h4>
           <div class="description">${description}</div>
+          ${size}
           ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
           <p>${item.price} грн</p>
           <div class="quantity-controls">
@@ -360,7 +365,8 @@ function addToCart(catIndex, itemIndex, quantity) {
       quantity: quantity,
       price: product.price,
       name: product.name[lang] || product.name,
-      image: product.image
+      image: product.image,
+      size: product.size // сохраняем размер для отображения в корзине
     });
   }
   
@@ -383,10 +389,15 @@ function renderCart() {
   cart.forEach((item, index) => {
     const li = document.createElement('li');
     li.className = 'cart-item';
+    
+    // Добавляем отображение размера в корзине, если он есть
+    const sizeInfo = item.size ? `<div>${translations[lang].size}: ${item.size}</div>` : '';
+    
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="item-info">
         <div>${item.name}</div>
+        ${sizeInfo}
         <div>${item.price} грн × <span class="item-quantity">${item.quantity}</span></div>
       </div>
       <div class="item-controls">
