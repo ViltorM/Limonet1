@@ -322,30 +322,22 @@ header {
   width: 100%;
 }
 
-/* Размеры товара */
+/* Размеры товара - ВЫРАВНЕНО ПО ЦЕНТРУ */
 .product-card .product-sizes {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 15px;
   width: 100%;
+  align-items: center;
 }
 
 .product-card .size-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   font-size: 14px;
-  text-align: left;
-}
-
-.product-card .size-label {
-  font-weight: bold;
-  flex: 1;
-}
-
-.product-card .size-value {
-  flex: 1;
-  text-align: right;
+  text-align: center;
+  width: 100%;
 }
 
 /* Материал товара */
@@ -709,12 +701,6 @@ footer .separator {
   .product-card .size-item {
     flex-direction: column;
     gap: 3px;
-  }
-  
-  .product-card .size-label,
-  .product-card .size-value {
-    text-align: center;
-    width: 100%;
   }
 }
 
