@@ -1,4 +1,4 @@
- translations = {
+translations = {
   ua: {
     logoSubtitle: "Футляри та кейси для різних потреб",
     cart_title: "Кошик",
@@ -13,7 +13,14 @@
     city_placeholder: "Населений пункт",
     post_placeholder: "Відділення пошти",
     comment_placeholder: "Коментар...",
-    featured_products: "Рекомендуємо"
+    featured_products: "Рекомендуємо",
+    in_stock: "Є в наявності",
+    soon: "Очікується",
+    out_of_stock: "Немає в наявності",
+    grid_view: "Сітка",
+    list_view: "Список",
+    horizontal_view: "Горизонтально",
+    add_to_cart: "Додати в кошик"
   },
   ru: {
     logoSubtitle: "Футляры и кейсы для разных нужд",
@@ -29,6 +36,13 @@
     city_placeholder: "Населенный пункт",
     post_placeholder: "Отделение почты",
     comment_placeholder: "Комментарий...",
-    featured_products: "Рекомендуем"
+    featured_products: "Рекомендуем",
+    in_stock: "Есть в наличии",
+    soon: "Ожидается",
+    out_of_stock: "Нет в наличии",
+    grid_view: "Сетка",
+    list_view: "Список",
+    horizontal_view: "Горизонтально",
+    add_to_cart: "Добавить в корзину"
   }
 };
