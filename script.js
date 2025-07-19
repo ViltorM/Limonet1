@@ -256,20 +256,22 @@ function renderProducts() {
       const isDisabled = item.status === 'out_of_stock';
       
       card.innerHTML = `
-        <img src="${item.image}" alt="${name}">
-        <h4>${name}</h4>
-        <div class="description">${description}</div>
-        <p>${item.price} грн</p>
-        ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
-        
-        <div class="quantity-controls">
-          <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                  ${isDisabled ? 'disabled' : ''}>-</button>
-          <input type="number" min="1" value="1" class="quantity-input" 
-                 data-cat="${catIndex}" data-item="${itemIndex}" 
-                 ${isDisabled ? 'disabled' : ''}>
-          <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                  ${isDisabled ? 'disabled' : ''}>+</button>
+        <div class="card-top">
+          <img src="${item.image}" alt="${name}">
+          <h4>${name}</h4>
+          <div class="description">${description}</div>
+          <p class="price">${item.price} грн</p>
+          ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
+          
+          <div class="quantity-controls">
+            <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>-</button>
+            <input type="number" min="1" value="1" class="quantity-input" 
+                   data-cat="${catIndex}" data-item="${itemIndex}" 
+                   ${isDisabled ? 'disabled' : ''}>
+            <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>+</button>
+          </div>
         </div>
         
         <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
