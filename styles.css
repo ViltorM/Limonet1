@@ -152,14 +152,16 @@ header {
 /* ========== РЕЖИМ ГОРИЗОНТАЛЬНО ========== */
 .horizontal-view .products-container {
   display: flex;
-  flex-wrap: wrap; /* Разрешаем перенос на новые строки */
-  justify-content: center;
-  gap: 25px; /* Отступы между карточками по горизонтали и вертикали */
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
   padding: 15px 5px 30px;
 }
 
 .horizontal-view .product-card {
-  width: 320px;
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* ========== РЕЖИМ СПИСКА ========== */
