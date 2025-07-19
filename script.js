@@ -10,7 +10,8 @@ fetch('translations.js')
   .then(data => {
     eval(data);
     applyTranslations();
-  });
+  })
+  .catch(error => console.error('Error loading translations:', error));
 
 // Проверяем localStorage при загрузке
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
       products = data;
       renderProducts();
       initFeaturedBanner();
-    });
+    })
+    .catch(error => console.error('Error loading products:', error));
     
   // Загрузка настроек вида
   const savedView = localStorage.getItem('product_view');
@@ -89,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // При изменении выбора
   paymentSelect.addEventListener('change', function() {
-    // Удаляем атрибут selected у placeholder после выбора
     if (this.value) {
       const placeholderOption = this.querySelector('option[disabled]');
       if (placeholderOption) {
@@ -100,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // При отправке формы
   document.getElementById('order-form').addEventListener('submit', function() {
-    // Гарантируем, что placeholder не будет выбран
     if (paymentSelect.value) {
       const placeholderOption = paymentSelect.querySelector('option[disabled]');
       if (placeholderOption) {
@@ -120,7 +120,7 @@ function setLang(selectedLang) {
 function applyTranslations() {
   document.querySelectorAll('[data-translate]').forEach(el => {
     const key = el.getAttribute('data-translate');
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.textContent = translations[lang][key];
     }
   });
@@ -128,7 +128,7 @@ function applyTranslations() {
   // Обновляем плейсхолдеры
   document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
     const key = el.getAttribute('data-translate-placeholder');
-    if (translations[lang][key]) {
+    if (translations[lang] && translations[lang][key]) {
       el.placeholder = translations[lang][key];
     }
   });
@@ -137,7 +137,7 @@ function applyTranslations() {
   document.querySelectorAll('.view-option').forEach(btn => {
     const viewType = btn.getAttribute('data-view');
     const translationKey = `${viewType}_view`;
-    if (translations[lang][translationKey]) {
+    if (translations[lang] && translations[lang][translationKey]) {
       btn.setAttribute('title', translations[lang][translationKey]);
       btn.setAttribute('aria-label', translations[lang][translationKey]);
     }
@@ -188,50 +188,30 @@ function initFeaturedBanner() {
 
 function renderProducts() {
   const container = document.getElementById('products');
+  if (!container) {
+    console.error('Products container not found');
+    return;
+  }
   container.innerHTML = '';
   
   const productsContainer = document.createElement('div');
-  productsContainer.className = `category-container ${currentView}-view`;
+  productsContainer.className = `products-container ${currentView}-view`;
   container.appendChild(productsContainer);
   
   products.forEach((category, catIndex) => {
-    // Создаем заголовок категории для всех режимов
+    const categoryWrapper = document.createElement('div');
+    categoryWrapper.className = 'category-container';
+    productsContainer.appendChild(categoryWrapper);
+    
+    // Создаем заголовок категории
     const title = document.createElement('h3');
     title.className = 'category-title';
     title.textContent = category.category[lang] || category.category;
-    productsContainer.appendChild(title);
+    categoryWrapper.appendChild(title);
     
-    // Для горизонтального режима добавляем зелёную полоску
-    if (currentView === 'horizontal') {
-      const line = document.createElement('div');
-      line.className = 'category-line';
-      productsContainer.appendChild(line);
-    }
-    
-    const categoryWrapper = document.createElement('div');
-    categoryWrapper.className = 'products-group';
-    
-    // Установка стилей для разных режимов
-    if (currentView === 'grid') {
-      categoryWrapper.style.display = 'flex';
-      categoryWrapper.style.flexWrap = 'wrap';
-      categoryWrapper.style.justifyContent = 'center';
-      categoryWrapper.style.gap = '25px';
-      categoryWrapper.style.rowGap = '25px';
-    } 
-    else if (currentView === 'horizontal') {
-      categoryWrapper.style.display = 'flex';
-      categoryWrapper.style.flexDirection = 'column';
-      categoryWrapper.style.alignItems: 'center';
-      categoryWrapper.style.gap = '25px';
-    } 
-    else if (currentView === 'list') {
-      categoryWrapper.style.display = 'flex';
-      categoryWrapper.style.flexDirection = 'column';
-      categoryWrapper.style.gap = '25px';
-    }
-    
-    productsContainer.appendChild(categoryWrapper);
+    const itemsContainer = document.createElement('div');
+    itemsContainer.className = 'products-group';
+    categoryWrapper.appendChild(itemsContainer);
     
     category.items.forEach((item, itemIndex) => {
       if (item.status === "hidden") return;
@@ -242,34 +222,34 @@ function renderProducts() {
       const name = item.name[lang] || item.name;
       const description = item.description?.[lang] || item.description || '';
       
-      // Определение класса статуса в зависимости от значения
+      // Определение класса статуса
       let statusClass = '';
       let statusText = '';
       
       if (item.status === 'in_stock') {
         statusClass = 'in-stock';
-        statusText = translations[lang].in_stock;
+        statusText = translations[lang]?.in_stock || 'In stock';
       } else if (item.status === 'soon') {
         statusClass = 'soon';
-        statusText = translations[lang].soon;
+        statusText = translations[lang]?.soon || 'Coming soon';
       } else if (item.status === 'out_of_stock') {
         statusClass = 'out-of-stock';
-        statusText = translations[lang].out_of_stock;
+        statusText = translations[lang]?.out_of_stock || 'Out of stock';
       }
       
       // Проверяем, доступен ли товар для заказа
       const isDisabled = item.status === 'out_of_stock';
       
-      // Добавляем отображение размеров (ИЗМЕНЕНО ДЛЯ ЦЕНТРИРОВАНИЯ)
+      // Добавляем отображение размеров
       const externalSize = item.externalSize ? `
         <div class="size-item">
-          <span>${translations[lang].external_size}: ${item.externalSize}</span>
+          <span>${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</span>
         </div>
       ` : '';
       
       const internalSize = item.internalSize ? `
         <div class="size-item">
-          <span>${translations[lang].internal_size}: ${item.internalSize}</span>
+          <span>${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}</span>
         </div>
       ` : '';
       
@@ -284,7 +264,7 @@ function renderProducts() {
       const material = item.material?.[lang] || item.material || '';
       const materialHtml = material ? `
         <div class="product-material">
-          <span class="material-label">${translations[lang].material}:</span>
+          <span class="material-label">${translations[lang]?.material || 'Material'}:</span>
           <span class="material-value">${material}</span>
         </div>
       ` : '';
@@ -317,7 +297,7 @@ function renderProducts() {
             </div>
             <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
                     ${isDisabled ? 'disabled' : ''}>
-              ${translations[lang].add_to_cart}
+              ${translations[lang]?.add_to_cart || 'Add to cart'}
             </button>
           </div>
         `;
@@ -349,44 +329,46 @@ function renderProducts() {
             
             <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
                     ${isDisabled ? 'disabled' : ''}>
-              ${translations[lang].add_to_cart}
+              ${translations[lang]?.add_to_cart || 'Add to cart'}
             </button>
           </div>
         `;
       }
       
-      categoryWrapper.appendChild(card);
+      itemsContainer.appendChild(card);
     });
   });
   
   // Добавляем обработчики
-  document.querySelectorAll('.add-to-cart:not(:disabled)').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const catIndex = e.target.getAttribute('data-cat');
-      const itemIndex = e.target.getAttribute('data-item');
-      const quantityInput = e.target.closest('.product-card').querySelector('.quantity-input');
-      const quantity = parseInt(quantityInput.value);
-      
-      addToCart(catIndex, itemIndex, quantity);
+  setTimeout(() => {
+    document.querySelectorAll('.add-to-cart:not(:disabled)').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const catIndex = e.target.getAttribute('data-cat');
+        const itemIndex = e.target.getAttribute('data-item');
+        const quantityInput = e.target.closest('.product-card').querySelector('.quantity-input');
+        const quantity = parseInt(quantityInput.value);
+        
+        addToCart(catIndex, itemIndex, quantity);
+      });
     });
-  });
-  
-  // Обработчики кнопок +/-
-  document.querySelectorAll('.quantity-btn.plus:not(:disabled)').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const input = e.target.parentElement.querySelector('.quantity-input');
-      input.value = parseInt(input.value) + 1;
+    
+    // Обработчики кнопок +/-
+    document.querySelectorAll('.quantity-btn.plus:not(:disabled)').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const input = e.target.parentElement.querySelector('.quantity-input');
+        input.value = parseInt(input.value) + 1;
+      });
     });
-  });
-  
-  document.querySelectorAll('.quantity-btn.minus:not(:disabled)').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const input = e.target.parentElement.querySelector('.quantity-input');
-      if (input.value > 1) {
-        input.value = parseInt(input.value) - 1;
-      }
+    
+    document.querySelectorAll('.quantity-btn.minus:not(:disabled)').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const input = e.target.parentElement.querySelector('.quantity-input');
+        if (input.value > 1) {
+          input.value = parseInt(input.value) - 1;
+        }
+      });
     });
-  });
+  }, 100);
 }
 
 function addToCart(catIndex, itemIndex, quantity) {
@@ -418,13 +400,19 @@ function addToCart(catIndex, itemIndex, quantity) {
   
   // Анимация добавления
   const btn = document.querySelector(`.add-to-cart[data-cat="${catIndex}"][data-item="${itemIndex}"]`);
-  btn.classList.add('animate');
-  setTimeout(() => btn.classList.remove('animate'), 500);
+  if (btn) {
+    btn.classList.add('animate');
+    setTimeout(() => btn.classList.remove('animate'), 500);
+  }
 }
 
 function renderCart() {
   const container = document.getElementById('cart-items');
+  if (!container) return;
+  
   const totalElement = document.getElementById('cart-total');
+  if (!totalElement) return;
+  
   container.innerHTML = '';
   
   let total = 0;
@@ -435,10 +423,10 @@ function renderCart() {
     
     // Добавляем отображение размеров и материала в корзине
     const sizeInfo = [];
-    if (item.externalSize) sizeInfo.push(`${translations[lang].external_size}: ${item.externalSize}`);
-    if (item.internalSize) sizeInfo.push(`${translations[lang].internal_size}: ${item.internalSize}`);
+    if (item.externalSize) sizeInfo.push(`${translations[lang]?.external_size || 'External size'}: ${item.externalSize}`);
+    if (item.internalSize) sizeInfo.push(`${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}`);
     
-    const materialInfo = item.material ? `${translations[lang].material}: ${item.material}` : '';
+    const materialInfo = item.material ? `${translations[lang]?.material || 'Material'}: ${item.material}` : '';
     
     const additionalHtml = [sizeInfo.join('<br>'), materialInfo].filter(Boolean).join('<br>');
     
@@ -520,7 +508,7 @@ function saveCart() {
 }
 
 // Обработка формы заказа
-document.getElementById('order-form').addEventListener('submit', function(e) {
+document.getElementById('order-form')?.addEventListener('submit', function(e) {
   e.preventDefault();
   
   if (cart.length === 0) {
@@ -530,7 +518,7 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
   
   const formData = new FormData(this);
   const order = {
-    id: Date.now(), // Уникальный ID заказа
+    id: Date.now(),
     customer: Object.fromEntries(formData),
     items: [...cart],
     total: document.getElementById('cart-total').textContent,
@@ -541,7 +529,7 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
       hour: '2-digit',
       minute: '2-digit'
     }),
-    status: 'new' // Статус заказа: new, processing, completed, cancelled
+    status: 'new'
   };
   
   // Сохраняем заказ
@@ -559,16 +547,9 @@ document.getElementById('order-form').addEventListener('submit', function(e) {
 });
 
 function saveOrder(order) {
-  // Получаем текущие заказы
   const orders = JSON.parse(localStorage.getItem('limonet_orders')) || [];
-  
-  // Добавляем новый заказ
   orders.push(order);
-  
-  // Сохраняем обратно
   localStorage.setItem('limonet_orders', JSON.stringify(orders));
-  
-  // Оповещаем админ-панель о новом заказе
   const event = new Event('newOrder');
   document.dispatchEvent(event);
 }
