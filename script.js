@@ -260,21 +260,72 @@ function renderProducts() {
       // Проверяем, доступен ли товар для заказа
       const isDisabled = item.status === 'out_of_stock';
       
-      // Добавляем отображение размера, если он есть
-      const size = item.size ? `<div class="product-size">${translations[lang].size}: ${item.size}</div>` : '';
+      // Добавляем отображение размеров
+      const externalSize = item.externalSize ? `
+        <div class="size-item">
+          <span class="size-label">${translations[lang].external_size}:</span>
+          <span class="size-value">${item.externalSize}</span>
+        </div>
+      ` : '';
       
+      const internalSize = item.internalSize ? `
+        <div class="size-item">
+          <span class="size-label">${translations[lang].internal_size}:</span>
+          <span class="size-value">${item.internalSize}</span>
+        </div>
+      ` : '';
+      
+      const sizes = (externalSize || internalSize) ? `
+        <div class="product-sizes">
+          ${externalSize}
+          ${internalSize}
+        </div>
+      ` : '';
+
       // Генерация HTML в зависимости от режима
       if (currentView === 'list') {
         card.innerHTML = `
           <img src="${item.image}" alt="${name}">
           <div class="product-info">
+            <div class="product-group">
+              <h4>${name}</h4>
+              <div class="description">${description}</div>
+            </div>
+            ${sizes}
+            <div class="control-group">
+              ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
+              <div class="product-price">${item.price} грн</div>
+              <div class="quantity-controls">
+                <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                        ${isDisabled ? 'disabled' : ''}>-</button>
+                <input type="number" min="1" value="1" class="quantity-input" 
+                       data-cat="${catIndex}" data-item="${itemIndex}" 
+                       ${isDisabled ? 'disabled' : ''}>
+                <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                        ${isDisabled ? 'disabled' : ''}>+</button>
+              </div>
+              <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                      ${isDisabled ? 'disabled' : ''}>
+                ${translations[lang].add_to_cart}
+              </button>
+            </div>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <img src="${item.image}" alt="${name}">
+          
+          <div class="product-group">
             <h4>${name}</h4>
             <div class="description">${description}</div>
-            ${size}
-            ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
-            <p>${item.price} грн</p>
           </div>
-          <div class="product-controls">
+          
+          ${sizes}
+          
+          <div class="control-group">
+            ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
+            <div class="product-price">${item.price} грн</div>
+            
             <div class="quantity-controls">
               <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
                       ${isDisabled ? 'disabled' : ''}>-</button>
@@ -284,33 +335,12 @@ function renderProducts() {
               <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
                       ${isDisabled ? 'disabled' : ''}>+</button>
             </div>
+            
             <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
                     ${isDisabled ? 'disabled' : ''}>
               ${translations[lang].add_to_cart}
             </button>
           </div>
-        `;
-      } else {
-        card.innerHTML = `
-          <img src="${item.image}" alt="${name}">
-          <h4>${name}</h4>
-          <div class="description">${description}</div>
-          ${size}
-          ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
-          <p>${item.price} грн</p>
-          <div class="quantity-controls">
-            <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                    ${isDisabled ? 'disabled' : ''}>-</button>
-            <input type="number" min="1" value="1" class="quantity-input" 
-                   data-cat="${catIndex}" data-item="${itemIndex}" 
-                   ${isDisabled ? 'disabled' : ''}>
-            <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                    ${isDisabled ? 'disabled' : ''}>+</button>
-          </div>
-          <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
-                  ${isDisabled ? 'disabled' : ''}>
-            ${translations[lang].add_to_cart}
-          </button>
         `;
       }
       
@@ -366,7 +396,8 @@ function addToCart(catIndex, itemIndex, quantity) {
       price: product.price,
       name: product.name[lang] || product.name,
       image: product.image,
-      size: product.size // сохраняем размер для отображения в корзине
+      externalSize: product.externalSize,
+      internalSize: product.internalSize
     });
   }
   
@@ -390,14 +421,20 @@ function renderCart() {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Добавляем отображение размера в корзине, если он есть
-    const sizeInfo = item.size ? `<div>${translations[lang].size}: ${item.size}</div>` : '';
+    // Добавляем отображение размеров в корзине, если они есть
+    const sizeInfo = [];
+    if (item.externalSize) sizeInfo.push(`${translations[lang].external_size}: ${item.externalSize}`);
+    if (item.internalSize) sizeInfo.push(`${translations[lang].internal_size}: ${item.internalSize}`);
+    
+    const sizeHtml = sizeInfo.length > 0 
+      ? `<div>${sizeInfo.join('<br>')}</div>` 
+      : '';
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="item-info">
         <div>${item.name}</div>
-        ${sizeInfo}
+        ${sizeHtml}
         <div>${item.price} грн × <span class="item-quantity">${item.quantity}</span></div>
       </div>
       <div class="item-controls">
