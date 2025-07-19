@@ -159,11 +159,31 @@ header {
 }
 
 .horizontal-view .product-card {
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
+  width: 90%;              /* Растягиваем карточку на 90% экрана */
+  max-width: 800px;        /* Ограничиваем на больших экранах */
+  margin: 0 auto;          /* Центруем карточку */
+  box-sizing: border-box;
 }
 
+/* Заголовок категории */
+.horizontal-view .category-title {
+  width: 90%;              /* Совпадает с шириной карточки */
+  max-width: 800px;        /* Чтобы не шире карточки */
+  margin: 0 auto 5px;      /* Центрирование и отступ снизу */
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;        /* Или center, если нужно по центру */
+}
+
+/* Синяя полоска под категорией */
+.horizontal-view .category-line {
+  width: 90%;              /* Совпадает с шириной карточки */
+  max-width: 800px;
+  margin: 0 auto 15px;
+  height: 3px;
+  background-color: #3399ff; /* Цвет полоски */
+  border-radius: 2px;
+}
 /* ========== РЕЖИМ СПИСКА ========== */
 .list-view .products-container {
   display: flex;
