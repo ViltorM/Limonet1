@@ -182,7 +182,7 @@ header {
 
 .list-view .product-card {
   width: 100%;
-  max-width: 600px;
+  max-width: 900px;
   flex-direction: row;
   align-items: flex-start; /* Выравнивание по верху */
   text-align: left;
