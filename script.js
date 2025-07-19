@@ -132,6 +132,16 @@ function applyTranslations() {
       el.placeholder = translations[lang][key];
     }
   });
+  
+  // Обновляем заголовки переключателей видов
+  document.querySelectorAll('.view-option').forEach(btn => {
+    const viewType = btn.getAttribute('data-view');
+    const translationKey = `${viewType}_view`;
+    if (translations[lang][translationKey]) {
+      btn.setAttribute('title', translations[lang][translationKey]);
+      btn.setAttribute('aria-label', translations[lang][translationKey]);
+    }
+  });
 }
 
 // Баннер рекомендуемых товаров
@@ -195,12 +205,24 @@ function renderProducts() {
     const categoryWrapper = document.createElement('div');
     categoryWrapper.className = 'products-group';
     
-    // Применение gap для всех режимов
+    // Установка стилей для разных режимов
     if (currentView === 'grid') {
-      categoryWrapper.style.rowGap = '25px';
-    } else if (currentView === 'list') {
+      categoryWrapper.style.display = 'flex';
+      categoryWrapper.style.flexWrap = 'wrap';
+      categoryWrapper.style.justifyContent = 'center';
       categoryWrapper.style.gap = '25px';
-    } else if (currentView === 'horizontal') {
+      categoryWrapper.style.rowGap = '25px';
+    } 
+    else if (currentView === 'horizontal') {
+      categoryWrapper.style.display = 'flex';
+      categoryWrapper.style.flexWrap = 'wrap';
+      categoryWrapper.style.justifyContent = 'center';
+      categoryWrapper.style.gap = '25px';
+      categoryWrapper.style.rowGap = '25px';
+    } 
+    else if (currentView === 'list') {
+      categoryWrapper.style.display = 'flex';
+      categoryWrapper.style.flexDirection = 'column';
       categoryWrapper.style.gap = '25px';
     }
     
@@ -215,22 +237,44 @@ function renderProducts() {
       const name = item.name[lang] || item.name;
       const description = item.description?.[lang] || item.description || '';
       
+      // Определение класса статуса в зависимости от значения
+      let statusClass = '';
+      let statusText = '';
+      
+      if (item.status === 'in_stock') {
+        statusClass = 'in-stock';
+        statusText = translations[lang].in_stock;
+      } else if (item.status === 'soon') {
+        statusClass = 'soon';
+        statusText = translations[lang].soon;
+      } else if (item.status === 'out_of_stock') {
+        statusClass = 'out-of-stock';
+        statusText = translations[lang].out_of_stock;
+      }
+      
+      // Проверяем, доступен ли товар для заказа
+      const isDisabled = item.status === 'out_of_stock';
+      
       card.innerHTML = `
         <img src="${item.image}" alt="${name}">
         <h4>${name}</h4>
         <div class="description">${description}</div>
         <p>${item.price} грн</p>
-        <p>${item.status === 'soon' ? 'Очікується' : ''}</p>
+        ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
         
         <div class="quantity-controls">
-          <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}">-</button>
+          <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                  ${isDisabled ? 'disabled' : ''}>-</button>
           <input type="number" min="1" value="1" class="quantity-input" 
-                 data-cat="${catIndex}" data-item="${itemIndex}">
-          <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}">+</button>
+                 data-cat="${catIndex}" data-item="${itemIndex}" 
+                 ${isDisabled ? 'disabled' : ''}>
+          <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                  ${isDisabled ? 'disabled' : ''}>+</button>
         </div>
         
-        <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}">
-          ${lang === 'ua' ? 'Додати в кошик' : 'Добавить в корзину'}
+        <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                ${isDisabled ? 'disabled' : ''}>
+          ${translations[lang].add_to_cart}
         </button>
       `;
       categoryWrapper.appendChild(card);
@@ -238,7 +282,7 @@ function renderProducts() {
   });
   
   // Добавляем обработчики
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
+  document.querySelectorAll('.add-to-cart:not(:disabled)').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const catIndex = e.target.getAttribute('data-cat');
       const itemIndex = e.target.getAttribute('data-item');
@@ -250,14 +294,14 @@ function renderProducts() {
   });
   
   // Обработчики кнопок +/-
-  document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+  document.querySelectorAll('.quantity-btn.plus:not(:disabled)').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const input = e.target.parentElement.querySelector('.quantity-input');
       input.value = parseInt(input.value) + 1;
     });
   });
   
-  document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+  document.querySelectorAll('.quantity-btn.minus:not(:disabled)').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const input = e.target.parentElement.querySelector('.quantity-input');
       if (input.value > 1) {
