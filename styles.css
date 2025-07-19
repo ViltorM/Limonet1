@@ -181,7 +181,7 @@ header {
   max-width: 800px;
   margin: 0 auto 15px;
   height: 3px;
-  background-color: #3399ff; /* Цвет полоски */
+  background-color: #4CAF50; /* Цвет полоски */
   border-radius: 2px;
 }
 /* ========== РЕЖИМ СПИСКА ========== */
