@@ -21,6 +21,8 @@ translations = {
     list_view: "Список",
     horizontal_view: "Горизонтально",
     add_to_cart: "Додати в кошик",
+    external_size: "Зовнішні розміри",
+    internal_size: "Внутрішні розміри",
     size: "Розмір"
   },
   ru: {
@@ -45,6 +47,8 @@ translations = {
     list_view: "Список",
     horizontal_view: "Горизонтально",
     add_to_cart: "Добавить в корзину",
+    external_size: "Внешние размеры",
+    internal_size: "Внутренние размеры",
     size: "Размер"
   }
 };
