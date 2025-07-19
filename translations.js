@@ -21,9 +21,9 @@ translations = {
     list_view: "Список",
     horizontal_view: "Горизонтально",
     add_to_cart: "Додати в кошик",
+    size: "Розмір",
     external_size: "Зовнішні розміри",
-    internal_size: "Внутрішні розміри",
-    size: "Розмір"
+    internal_size: "Внутрішні розміри"
   },
   ru: {
     logoSubtitle: "Футляры и кейсы для разных нужд",
@@ -47,8 +47,8 @@ translations = {
     list_view: "Список",
     horizontal_view: "Горизонтально",
     add_to_cart: "Добавить в корзину",
+    size: "Размер",
     external_size: "Внешние размеры",
-    internal_size: "Внутренние размеры",
-    size: "Размер"
+    internal_size: "Внутренние размеры"
   }
 };
