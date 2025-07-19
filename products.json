@@ -1,4 +1,4 @@
- [
+[
   {
     "category": {
       "ua": "Футляр №1",
@@ -17,7 +17,7 @@
         "size": "11×8×4",
         "price": 250,
         "image": "https://placehold.co/250x160?text=11x8x4",
-        "status": "available"
+        "status": "in_stock"
       },
       {
         "name": {
@@ -53,7 +53,7 @@
         "size": "15×11×5",
         "price": 290,
         "image": "https://placehold.co/250x160?text=15x11x5",
-        "status": "available"
+        "status": "out_of_stock"
       }
     ]
   }
