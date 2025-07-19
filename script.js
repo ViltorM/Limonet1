@@ -260,18 +260,16 @@ function renderProducts() {
       // Проверяем, доступен ли товар для заказа
       const isDisabled = item.status === 'out_of_stock';
       
-      // Добавляем отображение размеров
+      // Добавляем отображение размеров (ИЗМЕНЕНО ДЛЯ ЦЕНТРИРОВАНИЯ)
       const externalSize = item.externalSize ? `
         <div class="size-item">
-          <span class="size-label">${translations[lang].external_size}:</span>
-          <span class="size-value">${item.externalSize}</span>
+          <span>${translations[lang].external_size}: ${item.externalSize}</span>
         </div>
       ` : '';
       
       const internalSize = item.internalSize ? `
         <div class="size-item">
-          <span class="size-label">${translations[lang].internal_size}:</span>
-          <span class="size-value">${item.internalSize}</span>
+          <span>${translations[lang].internal_size}: ${item.internalSize}</span>
         </div>
       ` : '';
       
