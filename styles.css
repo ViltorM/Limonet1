@@ -112,7 +112,7 @@ header {
 .products {
   display: flex;
   flex-direction: column;
-  padding: 0 0 20px;
+  padding: 0 20px 20px;
   flex: 1;
 }
 
@@ -138,10 +138,6 @@ header {
   flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
-  padding: 0 20px;
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0 auto;
 }
 
 /* ========== РЕЖИМ СЕТКИ ========== */
@@ -151,17 +147,15 @@ header {
   justify-content: center;
   gap: 25px;
   row-gap: 25px;
-  width: 100%;
 }
 
 /* ========== РЕЖИМ ГОРИЗОНТАЛЬНО ========== */
 .horizontal-view .products-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Разрешаем перенос на новые строки */
   justify-content: center;
-  gap: 25px;
-  row-gap: 25px;
-  padding: 15px 20px 30px;
+  gap: 25px; /* Отступы между карточками по горизонтали и вертикали */
+  padding: 15px 5px 30px;
 }
 
 .horizontal-view .product-card {
@@ -176,7 +170,6 @@ header {
   max-width: 800px;
   margin: 0 auto;
   gap: 25px;
-  padding: 0;
 }
 
 .list-view .products-group {
@@ -190,11 +183,11 @@ header {
   width: 100%;
   max-width: 600px;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: flex-start; /* Выравнивание по верху */
   text-align: left;
   padding: 20px;
   box-sizing: border-box;
-  min-height: 200px;
+  min-height: 200px; /* Гарантирует минимальную высоту */
 }
 
 .list-view .product-card img {
@@ -202,12 +195,12 @@ header {
   height: 120px;
   margin-right: 20px;
   margin-bottom: 0;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Запрещаем сжатие изображения */
 }
 
 .list-view .product-info {
   flex: 1;
-  min-width: 0;
+  min-width: 0; /* Исправление переполнения текста */
 }
 
 /* ОБЩИЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ */
@@ -224,7 +217,6 @@ header {
   width: 280px;
   box-sizing: border-box;
   position: relative;
-  height: 100%;
 }
 
 .product-card:hover {
@@ -236,12 +228,12 @@ header {
   border-radius: 8px;
   height: 180px;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   flex-shrink: 0;
 }
 
 .product-card h4 {
-  margin: 0 0 10px;
+  margin: 0 0 15px;
   font-size: 1.2em;
   text-align: center;
   width: 100%;
@@ -250,16 +242,9 @@ header {
 .product-card .description {
   font-size: 15px;
   color: #555;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   text-align: center;
   line-height: 1.5;
-  width: 100%;
-}
-
-.product-card .price {
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-align: center;
   width: 100%;
 }
 
@@ -289,20 +274,39 @@ header {
   background-color: rgba(244, 67, 54, 0.1);
 }
 
-/* Контейнер для контента карточки */
-.card-top {
-  flex: 1;
+/* Унифицированные кнопки */
+.btn-primary {
+  background: #4CAF50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  text-align: center;
+  display: inline-block;
+  margin-top: auto;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
 }
 
-/* Стили для управления количеством */
+.btn-primary:hover {
+  background: #45a049;
+}
+
+.btn-primary:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Кнопки +/- */
 .quantity-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 0 20px;
+  margin: 15px 0;
 }
 
 .quantity-btn {
@@ -331,33 +335,6 @@ header {
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 4px;
-}
-
-/* Унифицированные кнопки */
-.btn-primary {
-  background: #4CAF50;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
-  text-align: center;
-  display: inline-block;
-  margin-top: auto;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.btn-primary:hover {
-  background: #45a049;
-}
-
-.btn-primary:disabled {
-  background: #cccccc;
-  cursor: not-allowed;
 }
 
 /* Корзина */
@@ -624,4 +601,4 @@ select:focus {
   outline: none;
   border-color: #4a90e2;
   box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
-} 
+}
