@@ -155,8 +155,9 @@ header {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  width: 90%;
-  margin-top: 20px;
+  width: 95%;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .horizontal-view .product-card {
