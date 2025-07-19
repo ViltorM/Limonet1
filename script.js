@@ -1,4 +1,4 @@
- let lang = 'ua';
+let lang = 'ua';
 let translations = {};
 let products = [];
 let cart = [];
