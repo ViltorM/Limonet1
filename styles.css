@@ -166,9 +166,10 @@ header {
 .list-view .products-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
+  align-items: stretch; /* заменяем center на stretch */
+  width: 100%;
+  max-width: none;
+  margin: 0;
   gap: 25px;
 }
 
