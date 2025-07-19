@@ -201,7 +201,7 @@ function renderProducts() {
     title.textContent = category.category[lang] || category.category;
     productsContainer.appendChild(title);
     
-    // Добавляем зеленую полоску для горизонтального режима
+    // Для горизонтального режима добавляем зелёную полоску
     if (currentView === 'horizontal') {
       const line = document.createElement('div');
       line.className = 'category-line';
