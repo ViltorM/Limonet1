@@ -222,7 +222,7 @@ function renderProducts() {
     else if (currentView === 'horizontal') {
       categoryWrapper.style.display = 'flex';
       categoryWrapper.style.flexDirection = 'column';
-      categoryWrapper.style.alignItems = 'center';
+      categoryWrapper.style.alignItems: 'center';
       categoryWrapper.style.gap = '25px';
     } 
     else if (currentView === 'list') {
