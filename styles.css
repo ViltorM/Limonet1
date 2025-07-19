@@ -126,10 +126,9 @@ header {
   text-align: center;
   margin-bottom: 25px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #4CAF50; /* НЕ меняем — это высота */
+  border-bottom: 2px solid #4CAF50;
   font-size: 1.5em;
-  width: 90%;
-  max-width: 1000px;
+  width: 95%;
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
