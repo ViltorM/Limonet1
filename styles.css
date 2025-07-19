@@ -123,7 +123,7 @@ header {
 
 .category-title {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 2px solid #4CAF50;
   font-size: 1.5em;
@@ -172,7 +172,7 @@ header {
   margin: 0 auto 5px;      /* Центрирование и отступ снизу */
   font-size: 20px;
   font-weight: bold;
-  text-align: left;        /* Или center, если нужно по центру */
+  text-align: center;
 }
 
 /* Синяя полоска под категорией */
@@ -188,7 +188,7 @@ header {
 .list-view .products-container {
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* заменяем center на stretch */
+  align-items: stretch;
   width: 100%;
   max-width: none;
   margin: 0;
@@ -207,23 +207,60 @@ header {
   margin: 0 auto;           /* Центрируется по горизонтали */
   padding: 20px;
   box-sizing: border-box;
+  display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  text-align: center;
   min-height: 200px;
 }
 
 .list-view .product-card img {
   width: 120px;
   height: 120px;
-  margin-right: 20px;
-  margin-bottom: 0;
-  flex-shrink: 0; /* Запрещаем сжатие изображения */
+  margin: 0 20px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 .list-view .product-info {
   flex: 1;
   min-width: 0; /* Исправление переполнения текста */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-view .product-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  margin-left: 20px;
+}
+
+.list-view .quantity-controls {
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 15px 0;
+}
+
+.list-view .quantity-btn {
+  width: 35px;
+  height: 35px;
+  margin: 5px 0;
+}
+
+.list-view .quantity-input {
+  width: 50px;
+  margin: 5px 0;
+}
+
+.list-view .btn-primary {
+  margin-top: 0;
+  width: 100%;
+  max-width: 140px;
 }
 
 /* ОБЩИЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ */
@@ -583,6 +620,12 @@ footer .separator {
 
   .list-view .product-info {
     width: 100%;
+  }
+
+  .list-view .product-controls {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 15px;
   }
 
   .horizontal-view .product-card {
