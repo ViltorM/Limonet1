@@ -170,20 +170,18 @@ header {
   width: 90%;              /* Совпадает с шириной карточки */
   max-width: 800px;        /* Чтобы не шире карточки */
   margin: 0 auto 5px;      /* Центрирование и отступ снизу */
-  font-size: 20px;
+  font-size: 1.5em;        /* Размер шрифта как в других режимах */
   font-weight: bold;
   text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #4CAF50; /* Зелёная полоска */
 }
 
-/* Синяя полоска под категорией */
+/* Убираем дублирующую полоску */
 .horizontal-view .category-line {
-  width: 90%;              /* Совпадает с шириной карточки */
-  max-width: 800px;
-  margin: 0 auto 15px;
-  height: 3px;
-  background-color: #4CAF50; /* Цвет полоски */
-  border-radius: 2px;
+  display: none;
 }
+
 /* ========== РЕЖИМ СПИСКА ========== */
 .list-view .products-container {
   display: flex;
@@ -203,7 +201,7 @@ header {
 }
 
 .list-view .product-card {
-  width: 90vw;              /* Занимает 90% ширины окна (viewport) */
+  width: 90vw;              /* Занимает 90% ширины окна */
   margin: 0 auto;           /* Центрируется по горизонтали */
   padding: 20px;
   box-sizing: border-box;
@@ -225,7 +223,7 @@ header {
 
 .list-view .product-info {
   flex: 1;
-  min-width: 0; /* Исправление переполнения текста */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -240,21 +238,24 @@ header {
   margin-left: 20px;
 }
 
+/* Горизонтальное расположение кнопок +/- */
 .list-view .quantity-controls {
-  flex-direction: column;
+  display: flex;
+  flex-direction: row; /* Горизонтальное расположение кнопок */
   align-items: center;
+  justify-content: center;
   margin: 0 0 15px 0;
 }
 
 .list-view .quantity-btn {
   width: 35px;
   height: 35px;
-  margin: 5px 0;
+  margin: 0 5px; /* Отступы между кнопками */
 }
 
 .list-view .quantity-input {
   width: 50px;
-  margin: 5px 0;
+  margin: 0 5px;
 }
 
 .list-view .btn-primary {
