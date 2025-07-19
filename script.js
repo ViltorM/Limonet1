@@ -195,11 +195,17 @@ function renderProducts() {
   container.appendChild(productsContainer);
   
   products.forEach((category, catIndex) => {
-    if (currentView !== 'horizontal') {
-      const title = document.createElement('h3');
-      title.className = 'category-title';
-      title.textContent = category.category[lang] || category.category;
-      productsContainer.appendChild(title);
+    // Создаем заголовок категории для всех режимов
+    const title = document.createElement('h3');
+    title.className = 'category-title';
+    title.textContent = category.category[lang] || category.category;
+    productsContainer.appendChild(title);
+    
+    // Добавляем зеленую полоску для горизонтального режима
+    if (currentView === 'horizontal') {
+      const line = document.createElement('div');
+      line.className = 'category-line';
+      productsContainer.appendChild(line);
     }
     
     const categoryWrapper = document.createElement('div');
@@ -215,10 +221,9 @@ function renderProducts() {
     } 
     else if (currentView === 'horizontal') {
       categoryWrapper.style.display = 'flex';
-      categoryWrapper.style.flexWrap = 'wrap';
-      categoryWrapper.style.justifyContent = 'center';
+      categoryWrapper.style.flexDirection = 'column';
+      categoryWrapper.style.alignItems = 'center';
       categoryWrapper.style.gap = '25px';
-      categoryWrapper.style.rowGap = '25px';
     } 
     else if (currentView === 'list') {
       categoryWrapper.style.display = 'flex';
@@ -255,28 +260,55 @@ function renderProducts() {
       // Проверяем, доступен ли товар для заказа
       const isDisabled = item.status === 'out_of_stock';
       
-      card.innerHTML = `
-        <img src="${item.image}" alt="${name}">
-        <h4>${name}</h4>
-        <div class="description">${description}</div>
-        <p>${item.price} грн</p>
-        ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
-        
-        <div class="quantity-controls">
-          <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                  ${isDisabled ? 'disabled' : ''}>-</button>
-          <input type="number" min="1" value="1" class="quantity-input" 
-                 data-cat="${catIndex}" data-item="${itemIndex}" 
-                 ${isDisabled ? 'disabled' : ''}>
-          <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                  ${isDisabled ? 'disabled' : ''}>+</button>
-        </div>
-        
-        <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
-                ${isDisabled ? 'disabled' : ''}>
-          ${translations[lang].add_to_cart}
-        </button>
-      `;
+      // Генерация HTML в зависимости от режима
+      if (currentView === 'list') {
+        card.innerHTML = `
+          <img src="${item.image}" alt="${name}">
+          <div class="product-info">
+            <h4>${name}</h4>
+            <div class="description">${description}</div>
+            ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
+            <p>${item.price} грн</p>
+          </div>
+          <div class="product-controls">
+            <div class="quantity-controls">
+              <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                      ${isDisabled ? 'disabled' : ''}>-</button>
+              <input type="number" min="1" value="1" class="quantity-input" 
+                     data-cat="${catIndex}" data-item="${itemIndex}" 
+                     ${isDisabled ? 'disabled' : ''}>
+              <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                      ${isDisabled ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>
+              ${translations[lang].add_to_cart}
+            </button>
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <img src="${item.image}" alt="${name}">
+          <h4>${name}</h4>
+          <div class="description">${description}</div>
+          ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
+          <p>${item.price} грн</p>
+          <div class="quantity-controls">
+            <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>-</button>
+            <input type="number" min="1" value="1" class="quantity-input" 
+                   data-cat="${catIndex}" data-item="${itemIndex}" 
+                   ${isDisabled ? 'disabled' : ''}>
+            <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>+</button>
+          </div>
+          <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                  ${isDisabled ? 'disabled' : ''}>
+            ${translations[lang].add_to_cart}
+          </button>
+        `;
+      }
+      
       categoryWrapper.appendChild(card);
     });
   });
@@ -286,7 +318,7 @@ function renderProducts() {
     btn.addEventListener('click', (e) => {
       const catIndex = e.target.getAttribute('data-cat');
       const itemIndex = e.target.getAttribute('data-item');
-      const quantityInput = e.target.parentElement.querySelector('.quantity-input');
+      const quantityInput = e.target.closest('.product-card').querySelector('.quantity-input');
       const quantity = parseInt(quantityInput.value);
       
       addToCart(catIndex, itemIndex, quantity);
