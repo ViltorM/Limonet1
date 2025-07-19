@@ -195,9 +195,13 @@ function renderProducts() {
     const categoryWrapper = document.createElement('div');
     categoryWrapper.className = 'products-group';
     
-    // Принудительное применение row-gap для режима сетки
+    // Применение gap для всех режимов
     if (currentView === 'grid') {
       categoryWrapper.style.rowGap = '25px';
+    } else if (currentView === 'list') {
+      categoryWrapper.style.gap = '25px';
+    } else if (currentView === 'horizontal') {
+      categoryWrapper.style.gap = '25px';
     }
     
     productsContainer.appendChild(categoryWrapper);
