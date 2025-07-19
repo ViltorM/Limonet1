@@ -59,6 +59,55 @@ document.addEventListener('DOMContentLoaded', () => {
       renderProducts();
     });
   });
+
+  // Добавляем иконки для полей формы
+  const addIcon = (selector, iconCode) => {
+    const input = document.querySelector(selector);
+    if (input) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'input-with-icon';
+      input.parentNode.insertBefore(wrapper, input);
+      wrapper.appendChild(input);
+      
+      wrapper.insertAdjacentHTML('afterbegin', 
+        `<span class="input-icon">${iconCode}</span>`);
+    }
+  };
+  
+  addIcon('input[name="fio"]', '👤');
+  addIcon('input[name="phone"]', '📱');
+  addIcon('input[name="city"]', '🏙️');
+  addIcon('input[name="post"]', '📮');
+  
+  // Решение проблемы с выбором оплаты
+  const paymentSelect = document.querySelector('select[name="payment"]');
+  
+  // Инициализация: если ничего не выбрано, показываем placeholder
+  if (!paymentSelect.value) {
+    paymentSelect.selectedIndex = 0;
+  }
+  
+  // При изменении выбора
+  paymentSelect.addEventListener('change', function() {
+    // Удаляем атрибут selected у placeholder после выбора
+    if (this.value) {
+      const placeholderOption = this.querySelector('option[disabled]');
+      if (placeholderOption) {
+        placeholderOption.removeAttribute('selected');
+      }
+    }
+  });
+  
+  // При отправке формы
+  document.getElementById('order-form').addEventListener('submit', function() {
+    // Гарантируем, что placeholder не будет выбран
+    if (paymentSelect.value) {
+      const placeholderOption = paymentSelect.querySelector('option[disabled]');
+      if (placeholderOption) {
+        placeholderOption.removeAttribute('selected');
+      }
+    }
+  });
 });
 
 function setLang(selectedLang) {
@@ -146,7 +195,7 @@ function renderProducts() {
     const categoryWrapper = document.createElement('div');
     categoryWrapper.className = 'products-group';
     
-    // ДОБАВЛЕНО: Принудительное применение row-gap для режима сетки
+    // Принудительное применение row-gap для режима сетки
     if (currentView === 'grid') {
       categoryWrapper.style.rowGap = '25px';
     }
