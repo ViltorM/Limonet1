@@ -145,6 +145,12 @@ function renderProducts() {
     
     const categoryWrapper = document.createElement('div');
     categoryWrapper.className = 'products-group';
+    
+    // ДОБАВЛЕНО: Принудительное применение row-gap для режима сетки
+    if (currentView === 'grid') {
+      categoryWrapper.style.rowGap = '25px';
+    }
+    
     productsContainer.appendChild(categoryWrapper);
     
     category.items.forEach((item, itemIndex) => {
@@ -371,7 +377,7 @@ function saveOrder(order) {
   orders.push(order);
   
   // Сохраняем обратно
-  localStorage.setItem('limonet_orders', JSON.stringify(order));
+  localStorage.setItem('limonet_orders', JSON.stringify(orders));
   
   // Оповещаем админ-панель о новом заказе
   const event = new Event('newOrder');
