@@ -95,6 +95,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
 .view-option.active {
@@ -144,44 +146,20 @@ header {
   flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
-  row-gap: 25px; /* Вертикальные отступы */
+  row-gap: 25px;
 }
 
 /* ========== РЕЖИМ ГОРИЗОНТАЛЬНО ========== */
 .horizontal-view .products-container {
   display: flex;
-  overflow-x: auto;
-  padding: 15px 15px 30px; /* Увеличены боковые отступы */
-  justify-content: flex-start;
-  gap: 25px; /* Горизонтальные отступы */
-  scrollbar-width: thin;
-  scrollbar-color: #4CAF50 #e8f5e9;
-}
-
-.horizontal-view .products-group {
-  display: flex;
-  gap: 25px; /* Отступы между карточками */
+  flex-wrap: wrap; /* Разрешаем перенос на новые строки */
+  justify-content: center;
+  gap: 25px; /* Отступы между карточками по горизонтали и вертикали */
+  padding: 15px 5px 30px;
 }
 
 .horizontal-view .product-card {
-  flex: 0 0 auto;
   width: 320px;
-  margin: 0;
-}
-
-/* Стили для скроллбара */
-.horizontal-view .products-container::-webkit-scrollbar {
-  height: 8px;
-}
-
-.horizontal-view .products-container::-webkit-scrollbar-track {
-  background: #e8f5e9;
-  border-radius: 4px;
-}
-
-.horizontal-view .products-container::-webkit-scrollbar-thumb {
-  background: #4CAF50;
-  border-radius: 4px;
 }
 
 /* ========== РЕЖИМ СПИСКА ========== */
@@ -191,25 +169,25 @@ header {
   align-items: center;
   max-width: 800px;
   margin: 0 auto;
-  gap: 25px; /* Вертикальные отступы между категориями */
+  gap: 25px;
 }
 
 .list-view .products-group {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 25px; /* Вертикальные отступы между карточками */
+  gap: 25px;
 }
 
 .list-view .product-card {
   width: 100%;
   max-width: 600px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start; /* Выравнивание по верху */
   text-align: left;
   padding: 20px;
   box-sizing: border-box;
-  margin: 0;
+  min-height: 200px; /* Гарантирует минимальную высоту */
 }
 
 .list-view .product-card img {
@@ -217,10 +195,12 @@ header {
   height: 120px;
   margin-right: 20px;
   margin-bottom: 0;
+  flex-shrink: 0; /* Запрещаем сжатие изображения */
 }
 
 .list-view .product-info {
   flex: 1;
+  min-width: 0; /* Исправление переполнения текста */
 }
 
 /* ОБЩИЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ */
@@ -236,6 +216,7 @@ header {
   align-items: center;
   width: 280px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .product-card:hover {
@@ -248,12 +229,14 @@ header {
   height: 180px;
   object-fit: cover;
   margin-bottom: 20px;
+  flex-shrink: 0;
 }
 
 .product-card h4 {
   margin: 0 0 15px;
   font-size: 1.2em;
   text-align: center;
+  width: 100%;
 }
 
 .product-card .description {
@@ -262,6 +245,33 @@ header {
   margin-bottom: 20px;
   text-align: center;
   line-height: 1.5;
+  width: 100%;
+}
+
+/* Стили для статуса товара */
+.product-card .status {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.product-card .status.in-stock {
+  color: #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.product-card .status.soon {
+  color: #FF9800;
+  background-color: rgba(255, 152, 0, 0.1);
+}
+
+.product-card .status.out-of-stock {
+  color: #F44336;
+  background-color: rgba(244, 67, 54, 0.1);
 }
 
 /* Унифицированные кнопки */
@@ -278,10 +288,17 @@ header {
   text-align: center;
   display: inline-block;
   margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .btn-primary:hover {
   background: #45a049;
+}
+
+.btn-primary:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
 
 /* Кнопки +/- */
@@ -304,6 +321,11 @@ header {
   justify-content: center;
   font-size: 16px;
   cursor: pointer;
+}
+
+.quantity-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
 
 .quantity-input {
@@ -350,6 +372,7 @@ header {
 
 .cart-item .item-info {
   flex: 1;
+  min-width: 0;
 }
 
 .cart-item .item-controls {
@@ -535,11 +558,10 @@ footer .separator {
     margin-bottom: 15px;
   }
 
-  /* Адаптация для горизонтального режима на мобильных */
-  .horizontal-view .products-container {
-    padding: 15px 10px 30px;
+  .list-view .product-info {
+    width: 100%;
   }
-  
+
   .horizontal-view .product-card {
     width: 280px;
   }
