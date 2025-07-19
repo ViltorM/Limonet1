@@ -241,7 +241,7 @@ header {
 /* Горизонтальное расположение кнопок +/- */
 .list-view .quantity-controls {
   display: flex;
-  flex-direction: row; /* Горизонтальное расположение кнопок */
+  flex-direction: row; /* Изменено на горизонтальное расположение */
   align-items: center;
   justify-content: center;
   margin: 0 0 15px 0;
@@ -333,6 +333,14 @@ header {
 .product-card .status.out-of-stock {
   color: #F44336;
   background-color: rgba(244, 67, 54, 0.1);
+}
+
+/* Стили для размера товара */
+.product-card .product-size {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 /* Унифицированные кнопки */
