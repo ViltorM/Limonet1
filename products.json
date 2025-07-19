@@ -16,6 +16,10 @@
         },
         "externalSize": "13×10×5 см",
         "internalSize": "11×8×4 см",
+        "material": {
+          "ua": "Еко-шкіра",
+          "ru": "Эко-кожа"
+        },
         "price": 250,
         "image": "https://placehold.co/250x160?text=11x8x4",
         "status": "in_stock"
@@ -31,6 +35,10 @@
         },
         "externalSize": "15×12×6 см",
         "internalSize": "13×10×4 см",
+        "material": {
+          "ua": "Текстиль",
+          "ru": "Текстиль"
+        },
         "price": 270,
         "image": "https://placehold.co/250x160?text=13x10x4",
         "status": "soon"
@@ -54,6 +62,10 @@
         },
         "externalSize": "17×14×7 см",
         "internalSize": "15×11×5 см",
+        "material": {
+          "ua": "Поліуретан",
+          "ru": "Полиуретан"
+        },
         "price": 290,
         "image": "https://placehold.co/250x160?text=15x11x5",
         "status": "out_of_stock"
