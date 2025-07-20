@@ -406,6 +406,7 @@ function addToCart(catIndex, itemIndex, quantity) {
   }
 }
 
+// ОБНОВЛЁННАЯ ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ
 function renderCart() {
   const container = document.getElementById('cart-items');
   if (!container) return;
@@ -421,21 +422,16 @@ function renderCart() {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Добавляем отображение размеров и материала в корзине
-    const sizeInfo = [];
-    if (item.externalSize) sizeInfo.push(`${translations[lang]?.external_size || 'External size'}: ${item.externalSize}`);
-    if (item.internalSize) sizeInfo.push(`${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}`);
-    
-    const materialInfo = item.material ? `${translations[lang]?.material || 'Material'}: ${item.material}` : '';
-    
-    const additionalHtml = [sizeInfo.join('<br>'), materialInfo].filter(Boolean).join('<br>');
+    // Отображаем только внешние размеры
+    const sizeHtml = item.externalSize ? 
+      `<div class="item-size">${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</div>` : '';
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="item-info">
-        <div>${item.name}</div>
-        ${additionalHtml ? `<div>${additionalHtml}</div>` : ''}
-        <div>${item.price} грн × <span class="item-quantity">${item.quantity}</span></div>
+        <div class="item-name">${item.name}</div>
+        ${sizeHtml}
+        <div class="item-price">${item.price} грн × ${item.quantity}</div>
       </div>
       <div class="item-controls">
         <div class="quantity-controls">
