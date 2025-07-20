@@ -704,15 +704,21 @@ footer .separator {
 }
 
 /* Адаптация для мобильных */
- @media (max-width: 600px) {
-  /* Вот сюда вставляется: 👇 */
- .grid-view .products-group {
+@media (max-width: 600px) {
+  /* Центрируем карточки на мобилке */
+  .grid-view .products-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-   }
- }
+  }
+
+  .cart-wrapper {
+    flex-direction: column;
+  }
+
+  .cart, .order-form {
+    width
   
   .cart-wrapper {
     flex-direction: column;
