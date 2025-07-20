@@ -1,4 +1,4 @@
-let lang = 'ua';
+let lang = localStorage.getItem('limonet_lang') || 'ua'; // Получаем сохранённый язык или 'ua' по умолчанию
 let translations = {};
 let products = [];
 let cart = [];
@@ -15,6 +15,19 @@ fetch('translations.js')
 
 // Проверяем localStorage при загрузке
 document.addEventListener('DOMContentLoaded', () => {
+  // Восстанавливаем сохранённый язык
+  const savedLang = localStorage.getItem('limonet_lang');
+  if (savedLang) {
+    lang = savedLang;
+    // Обновляем активную кнопку языка
+    document.querySelectorAll('.lang-switcher button').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent === lang.toUpperCase()) {
+        btn.classList.add('active');
+      }
+    });
+  }
+  
   const savedCart = localStorage.getItem('limonet_cart');
   if (savedCart) {
     cart = JSON.parse(savedCart);
@@ -112,6 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function setLang(selectedLang) {
   lang = selectedLang;
+  // Сохраняем выбранный язык
+  localStorage.setItem('limonet_lang', lang);
+  
+  // Обновляем активные кнопки
+  document.querySelectorAll('.lang-switcher button').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent === lang.toUpperCase()) {
+      btn.classList.add('active');
+    }
+  });
+  
   applyTranslations();
   renderProducts();
   renderCart();
@@ -406,7 +430,7 @@ function addToCart(catIndex, itemIndex, quantity) {
   }
 }
 
-// ОБНОВЛЁННАЯ ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ
+// Функция для отображения корзины
 function renderCart() {
   const container = document.getElementById('cart-items');
   if (!container) return;
@@ -422,15 +446,15 @@ function renderCart() {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Отображаем только внешние размеры
-    const sizeHtml = item.externalSize ? 
+    // Добавляем отображение внешних размеров
+    const externalSizeHtml = item.externalSize ? 
       `<div class="item-size">${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</div>` : '';
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="item-info">
         <div class="item-name">${item.name}</div>
-        ${sizeHtml}
+        ${externalSizeHtml}
         <div class="item-price">${item.price} грн × ${item.quantity}</div>
       </div>
       <div class="item-controls">
