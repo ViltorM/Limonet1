@@ -1,4 +1,4 @@
-let lang = localStorage.getItem('limonet_lang') || 'ua'; // Получаем сохранённый язык или 'ua' по умолчанию
+let lang = localStorage.getItem('limonet_lang') || 'ua';
 let translations = {};
 let products = [];
 let cart = [];
@@ -430,7 +430,7 @@ function addToCart(catIndex, itemIndex, quantity) {
   }
 }
 
-// Функция для отображения корзины
+// ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ С ФИКСОМ ПЕРЕВОДА
 function renderCart() {
   const container = document.getElementById('cart-items');
   if (!container) return;
@@ -442,13 +442,16 @@ function renderCart() {
   
   let total = 0;
   
+  // Определяем перевод для "Внешние размеры" в текущем языке
+  const externalSizeLabel = translations[lang]?.external_size || 'Внешние размеры';
+  
   cart.forEach((item, index) => {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Добавляем отображение внешних размеров
+    // Добавляем отображение внешних размеров с правильным переводом
     const externalSizeHtml = item.externalSize ? 
-      `<div class="item-size">${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</div>` : '';
+      `<div class="item-size">${externalSizeLabel}: ${item.externalSize}</div>` : '';
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
