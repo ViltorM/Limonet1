@@ -247,6 +247,13 @@ function renderProducts() {
     const content = document.createElement('div');
     content.className = 'category-content';
     
+    // Добавляем внешние размеры для футляров
+    const sizeHtml = firstItem.externalSize ? `
+      <p class="category-size">
+        ${translations[lang]?.external_size || 'External size'}: ${firstItem.externalSize}
+      </p>
+    ` : '';
+    
     content.innerHTML = `
       <img src="${firstItem.image}" alt="${category.category[lang] || category.category}" class="category-image">
       <div class="category-info">
@@ -254,6 +261,7 @@ function renderProducts() {
           ${translations[lang]?.material || 'Material'}: 
           ${firstItem.material?.[lang] || firstItem.material || ''}
         </p>
+        ${sizeHtml}
       </div>
     `;
     
@@ -316,15 +324,13 @@ function renderCategoryItems(category, catIndex, container) {
     // Добавляем отображение размеров
     const externalSize = item.externalSize ? `
       <div class="size-item">
-        <span class="size-label">${translations[lang]?.external_size || 'External size'}:</span>
-        <span class="size-value">${item.externalSize}</span>
+        <span>${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</span>
       </div>
     ` : '';
     
     const internalSize = item.internalSize ? `
       <div class="size-item">
-        <span class="size-label">${translations[lang]?.internal_size || 'Internal size'}:</span>
-        <span class="size-value">${item.internalSize}</span>
+        <span>${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}</span>
       </div>
     ` : '';
     
