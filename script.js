@@ -218,149 +218,198 @@ function renderProducts() {
   }
   container.innerHTML = '';
   
+  products.forEach((category, catIndex) => {
+    const categoryWrapper = document.createElement('div');
+    categoryWrapper.className = 'category-container';
+    container.appendChild(categoryWrapper);
+    
+    // Получаем первый товар для изображения и материала
+    const firstItem = category.items.find(item => item.status !== "hidden") || category.items[0];
+    
+    // Заголовок категории с переключателем
+    const header = document.createElement('div');
+    header.className = 'category-header';
+    header.setAttribute('data-cat', catIndex);
+    
+    const title = document.createElement('h3');
+    title.className = 'category-title';
+    title.textContent = category.category[lang] || category.category;
+    
+    const toggleIcon = document.createElement('span');
+    toggleIcon.className = 'toggle-icon';
+    toggleIcon.innerHTML = '▼';
+    
+    header.appendChild(title);
+    header.appendChild(toggleIcon);
+    categoryWrapper.appendChild(header);
+    
+    // Контент категории (свёрнутое состояние)
+    const content = document.createElement('div');
+    content.className = 'category-content';
+    
+    content.innerHTML = `
+      <img src="${firstItem.image}" alt="${category.category[lang] || category.category}" class="category-image">
+      <div class="category-info">
+        <h4>${category.category[lang] || category.category}</h4>
+        <p class="category-material">
+          ${translations[lang]?.material || 'Material'}: 
+          ${firstItem.material?.[lang] || firstItem.material || ''}
+        </p>
+      </div>
+    `;
+    
+    categoryWrapper.appendChild(content);
+    
+    // Контейнер для товаров
+    const itemsContainer = document.createElement('div');
+    itemsContainer.className = 'products-group';
+    itemsContainer.style.display = 'none'; // По умолчанию скрыт
+    categoryWrapper.appendChild(itemsContainer);
+    
+    // Обработчик клика по заголовку
+    header.addEventListener('click', () => {
+      const isExpanded = itemsContainer.style.display === 'block';
+      itemsContainer.style.display = isExpanded ? 'none' : 'block';
+      categoryWrapper.classList.toggle('expanded', !isExpanded);
+      
+      // Если разворачиваем - рендерим товары
+      if (!isExpanded && itemsContainer.children.length === 0) {
+        renderCategoryItems(category, catIndex, itemsContainer);
+      }
+    });
+  });
+}
+
+function renderCategoryItems(category, catIndex, container) {
+  container.innerHTML = '';
+  
   const productsContainer = document.createElement('div');
   productsContainer.className = `products-container ${currentView}-view`;
   container.appendChild(productsContainer);
   
-  products.forEach((category, catIndex) => {
-    const categoryWrapper = document.createElement('div');
-    categoryWrapper.className = 'category-container';
-    productsContainer.appendChild(categoryWrapper);
+  category.items.forEach((item, itemIndex) => {
+    if (item.status === "hidden") return;
     
-    // Создаем заголовок категории
-    const title = document.createElement('h3');
-    title.className = 'category-title';
-    title.textContent = category.category[lang] || category.category;
-    categoryWrapper.appendChild(title);
+    const card = document.createElement('div');
+    card.className = 'product-card';
     
-    const itemsContainer = document.createElement('div');
-    itemsContainer.className = 'products-group';
-    categoryWrapper.appendChild(itemsContainer);
+    const name = item.name[lang] || item.name;
+    const description = item.description?.[lang] || item.description || '';
     
-    category.items.forEach((item, itemIndex) => {
-      if (item.status === "hidden") return;
-      
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      
-      const name = item.name[lang] || item.name;
-      const description = item.description?.[lang] || item.description || '';
-      
-      // Определение класса статуса
-      let statusClass = '';
-      let statusText = '';
-      
-      if (item.status === 'in_stock') {
-        statusClass = 'in-stock';
-        statusText = translations[lang]?.in_stock || 'In stock';
-      } else if (item.status === 'soon') {
-        statusClass = 'soon';
-        statusText = translations[lang]?.soon || 'Coming soon';
-      } else if (item.status === 'out_of_stock') {
-        statusClass = 'out-of-stock';
-        statusText = translations[lang]?.out_of_stock || 'Out of stock';
-      }
-      
-      // Проверяем, доступен ли товар для заказа
-      const isDisabled = item.status === 'out_of_stock';
-      
-      // Добавляем отображение размеров
-      const externalSize = item.externalSize ? `
-        <div class="size-item">
-          <span>${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</span>
-        </div>
-      ` : '';
-      
-      const internalSize = item.internalSize ? `
-        <div class="size-item">
-          <span>${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}</span>
-        </div>
-      ` : '';
-      
-      const sizes = (externalSize || internalSize) ? `
-        <div class="product-sizes">
-          ${externalSize}
-          ${internalSize}
-        </div>
-      ` : '';
+    // Определение класса статуса
+    let statusClass = '';
+    let statusText = '';
+    
+    if (item.status === 'in_stock') {
+      statusClass = 'in-stock';
+      statusText = translations[lang]?.in_stock || 'In stock';
+    } else if (item.status === 'soon') {
+      statusClass = 'soon';
+      statusText = translations[lang]?.soon || 'Coming soon';
+    } else if (item.status === 'out_of_stock') {
+      statusClass = 'out-of-stock';
+      statusText = translations[lang]?.out_of_stock || 'Out of stock';
+    }
+    
+    // Проверяем, доступен ли товар для заказа
+    const isDisabled = item.status === 'out_of_stock';
+    
+    // Добавляем отображение размеров
+    const externalSize = item.externalSize ? `
+      <div class="size-item">
+        <span>${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</span>
+      </div>
+    ` : '';
+    
+    const internalSize = item.internalSize ? `
+      <div class="size-item">
+        <span>${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}</span>
+      </div>
+    ` : '';
+    
+    const sizes = (externalSize || internalSize) ? `
+      <div class="product-sizes">
+        ${externalSize}
+        ${internalSize}
+      </div>
+    ` : '';
 
-      // Добавляем отображение материала
-      const material = item.material?.[lang] || item.material || '';
-      const materialHtml = material ? `
-        <div class="product-material">
-          <span class="material-label">${translations[lang]?.material || 'Material'}:</span>
-          <span class="material-value">${material}</span>
-        </div>
-      ` : '';
+    // Добавляем отображение материала
+    const material = item.material?.[lang] || item.material || '';
+    const materialHtml = material ? `
+      <div class="product-material">
+        <span class="material-label">${translations[lang]?.material || 'Material'}:</span>
+        <span class="material-value">${material}</span>
+      </div>
+    ` : '';
 
-      // Генерация HTML в зависимости от режима
-      if (currentView === 'list') {
-        card.innerHTML = `
-          <img src="${item.image}" alt="${name}">
-          <div class="product-info">
-            <div class="product-group">
-              <h4>${name}</h4>
-              <div class="description">${description}</div>
-            </div>
-            ${sizes}
-            ${materialHtml}
-            <div class="control-group">
-              ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
-              <div class="product-price">${item.price} грн</div>
-            </div>
-          </div>
-          <div class="product-controls">
-            <div class="quantity-controls">
-              <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                      ${isDisabled ? 'disabled' : ''}>-</button>
-              <input type="number" min="1" value="1" class="quantity-input" 
-                     data-cat="${catIndex}" data-item="${itemIndex}" 
-                     ${isDisabled ? 'disabled' : ''}>
-              <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                      ${isDisabled ? 'disabled' : ''}>+</button>
-            </div>
-            <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
-                    ${isDisabled ? 'disabled' : ''}>
-              ${translations[lang]?.add_to_cart || 'Add to cart'}
-            </button>
-          </div>
-        `;
-      } else {
-        card.innerHTML = `
-          <img src="${item.image}" alt="${name}">
-          
+    // Генерация HTML в зависимости от режима
+    if (currentView === 'list') {
+      card.innerHTML = `
+        <img src="${item.image}" alt="${name}">
+        <div class="product-info">
           <div class="product-group">
             <h4>${name}</h4>
             <div class="description">${description}</div>
           </div>
-          
           ${sizes}
           ${materialHtml}
-          
           <div class="control-group">
             ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
             <div class="product-price">${item.price} грн</div>
-            
-            <div class="quantity-controls">
-              <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                      ${isDisabled ? 'disabled' : ''}>-</button>
-              <input type="number" min="1" value="1" class="quantity-input" 
-                     data-cat="${catIndex}" data-item="${itemIndex}" 
-                     ${isDisabled ? 'disabled' : ''}>
-              <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
-                      ${isDisabled ? 'disabled' : ''}>+</button>
-            </div>
-            
-            <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
-                    ${isDisabled ? 'disabled' : ''}>
-              ${translations[lang]?.add_to_cart || 'Add to cart'}
-            </button>
           </div>
-        `;
-      }
-      
-      itemsContainer.appendChild(card);
-    });
+        </div>
+        <div class="product-controls">
+          <div class="quantity-controls">
+            <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>-</button>
+            <input type="number" min="1" value="1" class="quantity-input" 
+                   data-cat="${catIndex}" data-item="${itemIndex}" 
+                   ${isDisabled ? 'disabled' : ''}>
+            <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>+</button>
+          </div>
+          <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                  ${isDisabled ? 'disabled' : ''}>
+            ${translations[lang]?.add_to_cart || 'Add to cart'}
+          </button>
+        </div>
+      `;
+    } else {
+      card.innerHTML = `
+        <img src="${item.image}" alt="${name}">
+        
+        <div class="product-group">
+          <h4>${name}</h4>
+          <div class="description">${description}</div>
+        </div>
+        
+        ${sizes}
+        ${materialHtml}
+        
+        <div class="control-group">
+          ${statusText ? `<div class="status ${statusClass}">${statusText}</div>` : ''}
+          <div class="product-price">${item.price} грн</div>
+          
+          <div class="quantity-controls">
+            <button class="quantity-btn minus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>-</button>
+            <input type="number" min="1" value="1" class="quantity-input" 
+                   data-cat="${catIndex}" data-item="${itemIndex}" 
+                   ${isDisabled ? 'disabled' : ''}>
+            <button class="quantity-btn plus" data-cat="${catIndex}" data-item="${itemIndex}" 
+                    ${isDisabled ? 'disabled' : ''}>+</button>
+          </div>
+          
+          <button class="add-to-cart btn-primary" data-cat="${catIndex}" data-item="${itemIndex}" 
+                  ${isDisabled ? 'disabled' : ''}>
+            ${translations[lang]?.add_to_cart || 'Add to cart'}
+          </button>
+        </div>
+      `;
+    }
+    
+    productsContainer.appendChild(card);
   });
   
   // Добавляем обработчики
