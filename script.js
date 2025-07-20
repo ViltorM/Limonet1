@@ -250,7 +250,6 @@ function renderProducts() {
     content.innerHTML = `
       <img src="${firstItem.image}" alt="${category.category[lang] || category.category}" class="category-image">
       <div class="category-info">
-        <h4>${category.category[lang] || category.category}</h4>
         <p class="category-material">
           ${translations[lang]?.material || 'Material'}: 
           ${firstItem.material?.[lang] || firstItem.material || ''}
@@ -317,13 +316,15 @@ function renderCategoryItems(category, catIndex, container) {
     // Добавляем отображение размеров
     const externalSize = item.externalSize ? `
       <div class="size-item">
-        <span>${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</span>
+        <span class="size-label">${translations[lang]?.external_size || 'External size'}:</span>
+        <span class="size-value">${item.externalSize}</span>
       </div>
     ` : '';
     
     const internalSize = item.internalSize ? `
       <div class="size-item">
-        <span>${translations[lang]?.internal_size || 'Internal size'}: ${item.internalSize}</span>
+        <span class="size-label">${translations[lang]?.internal_size || 'Internal size'}:</span>
+        <span class="size-value">${item.internalSize}</span>
       </div>
     ` : '';
     
