@@ -167,10 +167,12 @@ header {
   width: 95%;
   max-width: 100%;
   margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   padding: 20px;
   border-radius: 12px;
   box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+  margin-bottom: 20px;
 }
 
 /* ========== РЕЖИМ СЕТКИ ========== */
@@ -183,13 +185,17 @@ header {
 .grid-view .products-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start; /* Изменено на выравнивание по левому краю */
   gap: 25px;
   row-gap: 25px;
 }
 
 .grid-view .product-card {
   margin: 0;
+  width: calc(25% - 20px); /* Фиксированная ширина с учетом отступов */
+  min-width: 270px; /* Минимальная ширина карточки */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
 }
 
 /* ========== РЕЖИМ СПИСКА ========== */
@@ -220,6 +226,9 @@ header {
   flex-direction: row;
   align-items: center;
   min-height: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+  margin-bottom: 20px;
 }
 
 .list-view .product-card img {
@@ -277,7 +286,6 @@ header {
 .product-card {
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 20px;
   text-align: center;
   transition: transform 0.3s;
@@ -287,6 +295,9 @@ header {
   width: 270px;
   box-sizing: border-box;
   position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+  margin-bottom: 15px;
 }
 
 .product-card:hover {
@@ -889,7 +900,7 @@ select:focus {
   .grid-view .products-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start; /* Оставлено выравнивание по левому краю */
     gap: 25px;
     row-gap: 25px;
   }
