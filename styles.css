@@ -758,11 +758,22 @@ footer .separator {
     padding: 15px;
     width: 100%;
     max-width: 260px;
+    margin-left: auto; /* Центрирование карточки */
+    margin-right: auto; /* Центрирование карточки */
+  }
+  
+  /* Центрирование для всех режимов в мобильной версии */
+  .grid-view .products-group,
+  .list-view .products-group,
+  .horizontal-view .products-group {
+    justify-content: center; /* Центрируем карточки */
+    align-items: center; /* Центрируем карточки */
   }
   
   .list-view .product-card {
     flex-direction: column;
     text-align: center;
+    align-items: center; /* Центрируем элементы */
   }
   
   .list-view .product-card img {
@@ -789,6 +800,8 @@ footer .separator {
   .product-card .size-item {
     flex-direction: column;
     gap: 3px;
+    justify-content: center; /* Центрируем размеры */
+    align-items: center; /* Центрируем размеры */
   }
   
   .horizontal-view .category-title {
@@ -821,6 +834,7 @@ footer .separator {
   .cart-item .item-info {
     min-width: 120px;
     margin-right: 5px;
+    text-align: center; /* Центрируем текст в корзине */
   }
   
   .cart-item .item-name {
@@ -851,13 +865,39 @@ footer .separator {
   .grid-view .product-card {
     flex-direction: column; /* Вертикальное расположение на мобильных */
     text-align: center; /* Центрируем текст */
+    align-items: center; /* Центрируем все элементы */
   }
   
   .grid-view .product-card img {
     width: 100%; /* Полная ширина на мобильных */
     height: auto; /* Автоматическая высота */
+    max-height: 200px; /* Максимальная высота */
     margin-right: 0; /* Убираем правый отступ */
     margin-bottom: 15px; /* Добавляем нижний отступ */
+  }
+  
+  .grid-view .product-card .product-group,
+  .grid-view .product-card .product-sizes,
+  .grid-view .product-card .product-material,
+  .grid-view .product-card .control-group {
+    align-items: center; /* Центрируем содержимое */
+    text-align: center; /* Центрируем текст */
+  }
+  
+  .grid-view .product-card .size-item {
+    justify-content: center; /* Центрируем размеры */
+  }
+  
+  /* Центрирование кнопок управления количеством */
+  .grid-view .product-card .quantity-controls {
+    justify-content: center;
+  }
+  
+  /* Центрирование заголовков и текста */
+  .grid-view .product-card h4,
+  .grid-view .product-card .description,
+  .grid-view .product-card .product-price {
+    text-align: center;
   }
 }
 
