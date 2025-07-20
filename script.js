@@ -406,7 +406,7 @@ function addToCart(catIndex, itemIndex, quantity) {
   }
 }
 
-// ОБНОВЛЁННАЯ ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ
+// ОБНОВЛЁННАЯ ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ С ВНЕШНИМИ РАЗМЕРАМИ
 function renderCart() {
   const container = document.getElementById('cart-items');
   if (!container) return;
@@ -422,15 +422,15 @@ function renderCart() {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Отображаем только внешние размеры
-    const sizeHtml = item.externalSize ? 
+    // Добавляем отображение внешних размеров
+    const externalSizeHtml = item.externalSize ? 
       `<div class="item-size">${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</div>` : '';
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
       <div class="item-info">
         <div class="item-name">${item.name}</div>
-        ${sizeHtml}
+        ${externalSizeHtml}
         <div class="item-price">${item.price} грн × ${item.quantity}</div>
       </div>
       <div class="item-controls">
