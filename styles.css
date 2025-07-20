@@ -298,17 +298,17 @@ header {
 }
 
 /* Группы элементов */
-product-card .product-group {
+.product-card .product-group {
   margin-bottom: 15px;
   width: 100%;
 }
 
-product-card .product-group:last-child {
+.product-card .product-group:last-child {
   margin-bottom: 0;
 }
 
 /* Название товара */
-product-card h4 {
+.product-card h4 {
   margin: 0 0 10px;
   font-size: 1.2em;
   text-align: center;
@@ -316,7 +316,7 @@ product-card h4 {
 }
 
 /* Описание товара */
-product-card .description {
+.product-card .description {
   font-size: 15px;
   color: #555;
   margin-bottom: 15px;
@@ -326,7 +326,7 @@ product-card .description {
 }
 
 /* Размеры товара */
-product-card .product-sizes {
+.product-card .product-sizes {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -335,7 +335,7 @@ product-card .product-sizes {
   align-items: center;
 }
 
-product-card .size-item {
+.product-card .size-item {
   display: flex;
   justify-content: center;
   font-size: 14px;
@@ -344,7 +344,7 @@ product-card .size-item {
 }
 
 /* Материал товара */
-product-card .product-material {
+.product-card .product-material {
   width: 100%;
   text-align: center;
   margin-bottom: 15px;
@@ -356,12 +356,12 @@ product-card .product-material {
   gap: 8px;
 }
 
-product-card .material-label {
+.product-card .material-label {
   font-weight: bold;
 }
 
 /* Стили для статуса товара */
-product-card .status {
+.product-card .status {
   font-size: 14px;
   font-weight: bold;
   padding: 4px 8px;
@@ -371,30 +371,30 @@ product-card .status {
   text-align: center;
 }
 
-product-card .status.in-stock {
+.product-card .status.in-stock {
   color: #4CAF50;
   background-color: rgba(76, 175, 80, 0.1);
 }
 
-product-card .status.soon {
+.product-card .status.soon {
   color: #FF9800;
   background-color: rgba(255, 152, 0, 0.1);
 }
 
-product-card .status.out-of-stock {
+.product-card .status.out-of-stock {
   color: #F44336;
   background-color: rgba(244, 67, 54, 0.1);
 }
 
 /* Цена товара - жирный шрифт */
-product-card .product-price {
+.product-card .product-price {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 15px;
 }
 
 /* Группа управления (статус, цена, кнопки) */
-product-card .control-group {
+.product-card .control-group {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -464,7 +464,7 @@ product-card .control-group {
   cursor: not-allowed;
 }
 
-/* Корзина - ОБНОВЛЕННЫЕ СТИЛИ С ГАРАНТИЕЙ ОТОБРАЖЕНИЯ РАЗМЕРОВ */
+/* Корзина - ОБНОВЛЕННЫЕ СТИЛИ */
 .cart-wrapper {
   display: flex;
   flex-direction: column;
@@ -518,7 +518,6 @@ product-card .control-group {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: block; /* Гарантированное отображение */
 }
 
 .cart-item .item-price {
