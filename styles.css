@@ -172,7 +172,7 @@ header {
   box-sizing: border-box;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   border: 1px solid #eee;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Отступ снизу */
 }
 
 /* ========== РЕЖИМ СЕТКИ ========== */
@@ -182,20 +182,22 @@ header {
   gap: 40px;
 }
 
+/* ОСНОВНОЕ ИСПРАВЛЕНИЕ: ДОБАВЛЕНЫ ОТСТУПЫ МЕЖДУ КАРТОЧКАМИ */
 .grid-view .products-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; /* Изменено на выравнивание по левому краю */
-  gap: 25px;
-  row-gap: 25px;
+  justify-content: flex-start;
+  gap: 25px; /* Горизонтальные и вертикальные отступы */
+  padding: 10px 0; /* Дополнительные отступы сверху и снизу */
 }
 
 .grid-view .product-card {
   margin: 0;
-  width: calc(25% - 20px); /* Фиксированная ширина с учетом отступов */
-  min-width: 270px; /* Минимальная ширина карточки */
+  width: calc(25% - 20px);
+  min-width: 270px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border: 1px solid #eee;
+  margin-bottom: 15px; /* Дополнительный вертикальный отступ */
 }
 
 /* ========== РЕЖИМ СПИСКА ========== */
@@ -213,7 +215,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 20px;
+  gap: 20px; /* Отступы между карточками */
 }
 
 .list-view .product-card {
@@ -228,7 +230,7 @@ header {
   min-height: 180px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border: 1px solid #eee;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Отступ снизу */
 }
 
 .list-view .product-card img {
@@ -297,7 +299,7 @@ header {
   position: relative;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border: 1px solid #eee;
-  margin-bottom: 15px;
+  margin-bottom: 15px; /* ГАРАНТИРОВАННЫЙ ОТСТУП СНИЗУ */
 }
 
 .product-card:hover {
@@ -896,11 +898,10 @@ select:focus {
     align-items: flex-start;
   }
   
-  /* Вернём оригинальное расположение карточек в grid-режиме */
   .grid-view .products-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Оставлено выравнивание по левому краю */
+    justify-content: flex-start;
     gap: 25px;
     row-gap: 25px;
   }
