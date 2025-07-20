@@ -186,9 +186,9 @@ header {
 .grid-view .products-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 25px; /* Горизонтальные и вертикальные отступы */
-  padding: 10px 0; /* Дополнительные отступы сверху и снизу */
+  justify-content: center; /* центрируем карточки */
+  gap: 25px;
+  padding: 10px 0;
 }
 
 .grid-view .product-card {
