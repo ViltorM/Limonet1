@@ -138,7 +138,7 @@ function setLang(selectedLang) {
   
   applyTranslations();
   renderProducts();
-  renderCart();
+  renderCart(); // Обязательно перерисовываем корзину при смене языка
 }
 
 function applyTranslations() {
@@ -406,12 +406,13 @@ function addToCart(catIndex, itemIndex, quantity) {
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
+    // Сохраняем идентификаторы товара, а не название
     cart.push({
       catIndex: parseInt(catIndex),
       itemIndex: parseInt(itemIndex),
       quantity: quantity,
       price: product.price,
-      name: product.name[lang] || product.name,
+      // Не сохраняем название, будем брать его из актуального источника
       image: product.image,
       externalSize: product.externalSize,
       internalSize: product.internalSize,
@@ -446,6 +447,13 @@ function renderCart() {
   const externalSizeLabel = translations[lang]?.external_size || 'Зовнішні розміри';
   
   cart.forEach((item, index) => {
+    // Получаем актуальную информацию о товаре
+    const product = products[item.catIndex]?.items[item.itemIndex];
+    if (!product) return;
+    
+    // Берем название на текущем языке
+    const productName = product.name[lang] || product.name;
+    
     const li = document.createElement('li');
     li.className = 'cart-item';
     
@@ -454,9 +462,9 @@ function renderCart() {
       `<div class="item-size">${externalSizeLabel}: ${item.externalSize}</div>` : '';
     
     li.innerHTML = `
-      <img src="${item.image}" alt="${item.name}">
+      <img src="${item.image}" alt="${productName}">
       <div class="item-info">
-        <div class="item-name">${item.name}</div>
+        <div class="item-name">${productName}</div>
         ${externalSizeHtml}
         <div class="item-price">${item.price} грн × ${item.quantity}</div>
       </div>
