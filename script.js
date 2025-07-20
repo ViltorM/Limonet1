@@ -406,7 +406,7 @@ function addToCart(catIndex, itemIndex, quantity) {
   }
 }
 
-// ОБНОВЛЁННАЯ ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ
+// ОБНОВЛЁННАЯ ФУНКЦИЯ ДЛЯ ОТОБРАЖЕНИЯ КОРЗИНЫ С ГАРАНТИЕЙ РАЗМЕРОВ
 function renderCart() {
   const container = document.getElementById('cart-items');
   if (!container) return;
@@ -422,9 +422,12 @@ function renderCart() {
     const li = document.createElement('li');
     li.className = 'cart-item';
     
-    // Отображаем только внешние размеры
-    const sizeHtml = item.externalSize ? 
-      `<div class="item-size">${translations[lang]?.external_size || 'External size'}: ${item.externalSize}</div>` : '';
+    // Гарантированно отображаем внешние размеры, если они есть
+    let sizeHtml = '';
+    if (item.externalSize) {
+      const sizeLabel = translations[lang]?.external_size || 'External size';
+      sizeHtml = `<div class="item-size">${sizeLabel}: ${item.externalSize}</div>`;
+    }
     
     li.innerHTML = `
       <img src="${item.image}" alt="${item.name}">
