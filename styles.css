@@ -476,11 +476,6 @@ header {
   box-sizing: border-box;
 }
 
-/* ← Вставь прямо здесь: */
-.submit-button {
-  color: white;
-}
-
 .btn-primary:hover {
   background: #45a049;
 }
@@ -648,6 +643,11 @@ header {
   box-sizing: border-box;
   transition: all 0.3s;
   color: #000;
+}
+
+/* ИСПРАВЛЕНИЕ: Белый цвет текста для кнопки отправки заказа */
+.order-form .btn-primary {
+  color: white !important;
 }
 
 .order-form select {
@@ -909,5 +909,5 @@ select:focus {
     justify-content: flex-start;
     gap: 25px;
     row-gap: 25px;
-  } 
+  }
 }
