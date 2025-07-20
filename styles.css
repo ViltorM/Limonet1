@@ -704,11 +704,15 @@ footer .separator {
 }
 
 /* Адаптация для мобильных */
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-    gap: 10px;
-  }
+ @media (max-width: 600px) {
+  /* Вот сюда вставляется: 👇 */
+ .grid-view .products-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+   }
+ }
   
   .cart-wrapper {
     flex-direction: column;
@@ -807,10 +811,6 @@ footer .separator {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-
-  .grid-view .products-group {
-  justify-content: center;
-}
   
   .cart-item img {
     width: 40px;
