@@ -17,12 +17,10 @@ header {
   font-family: 'Berkshire Swash', cursive;
   font-size: 36px;
   margin: 0;
-  color: #000;
 }
 .site-subtitle {
   font-size: 16px;
   margin: 5px 0 10px;
-  color: #000;
 }
 .lang-switcher {
   margin-top: 5px;
@@ -120,19 +118,20 @@ header {
 
 /* Контейнеры категорий */
 .category-container {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 /* Общий стиль заголовка категории */
 .category-title {
   text-align: center;
+  margin-bottom: 25px;
   padding-bottom: 10px;
   border-bottom: 2px solid #4CAF50;
   font-size: 1.5em;
   width: 95%;
-  margin: 0 auto 20px;
+  margin-left: auto;
+  margin-right: auto;
   box-sizing: border-box;
-  color: #000;
 }
 
 /* ========== РЕЖИМ ГОРИЗОНТАЛЬНО (КАСТОМНЫЙ ВИД) ========== */
@@ -140,7 +139,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 50px;
   padding: 15px 0 30px;
   width: 100%;
   max-width: 100%;
@@ -157,7 +156,7 @@ header {
 .horizontal-view .products-group {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
   width: 95%;
   max-width: 100%;
   margin: 0 auto;
@@ -167,56 +166,25 @@ header {
   width: 95%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 20px;
-  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  padding: 25px;
+  border-radius: 15px;
   box-sizing: border-box;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  border: 1px solid #eee;
-  margin-bottom: 20px;
 }
 
-/* ========== РЕЖИМ СЕТКИ (КАСТОМНЫЙ ГОРИЗОНТАЛЬНЫЙ) ========== */
+/* ========== РЕЖИМ СЕТКИ ========== */
 .grid-view .products-container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 50px;
 }
 
 .grid-view .products-group {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Центрируем карточки по горизонтали */
-  gap: 25px; /* Горизонтальные и вертикальные отступы */
-  padding: 10px 0; /* Дополнительные отступы сверху и снизу */
-}
-
-.grid-view .product-card {
-  margin: 0;
-  width: calc(25% - 20px); /* Фиксированная ширина с учетом отступов */
-  min-width: 270px; /* Минимальная ширина карточки */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: 1px solid #eee;
-  margin-bottom: 15px; /* Дополнительный вертикальный отступ */
-  
-  /* Горизонтальное расположение элементов внутри карточки */
-  display: flex;
-  flex-direction: row; /* Изменено на горизонтальное расположение */
-  align-items: flex-start; /* Выравнивание по верхнему краю */
-}
-
-/* Адаптация элементов карточки для горизонтального расположения */
-.grid-view .product-card img {
-  width: 120px; /* Фиксированная ширина изображения */
-  height: 120px; /* Фиксированная высота изображения */
-  margin-right: 15px; /* Отступ справа от изображения */
-  margin-bottom: 0; /* Убираем нижний отступ */
-  flex-shrink: 0; /* Предотвращаем сжатие изображения */
-}
-
-.grid-view .product-card .card-content {
-  flex: 1; /* Занимает оставшееся пространство */
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  row-gap: 25px;
 }
 
 /* ========== РЕЖИМ СПИСКА ========== */
@@ -227,14 +195,14 @@ header {
   width: 100%;
   max-width: none;
   margin: 0;
-  gap: 20px;
+  gap: 25px;
 }
 
 .list-view .products-group {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 20px;
+  gap: 25px;
 }
 
 .list-view .product-card {
@@ -246,10 +214,7 @@ header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  min-height: 180px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: 1px solid #eee;
-  margin-bottom: 20px;
+  min-height: 200px;
 }
 
 .list-view .product-card img {
@@ -306,139 +271,135 @@ header {
 /* ОБЩИЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ */
 .product-card {
   background-color: white;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 25px;
+  text-align: center;
   transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 280px;
   box-sizing: border-box;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: 1px solid #eee;
-  margin-bottom: 15px;
 }
 
 .product-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
 }
 
-/* Стили по умолчанию для вертикального расположения */
-.product-card:not(.grid-view .product-card) img {
+.product-card img {
   max-width: 100%;
   border-radius: 8px;
-  height: 170px;
+  height: 180px;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   flex-shrink: 0;
 }
 
 /* Группы элементов */
-.product-card .card-content {
-  width: 100%;
-  text-align: center; /* Центрируем текст по умолчанию */
-}
-
-.product-card .product-group {
+product-card .product-group {
   margin-bottom: 15px;
   width: 100%;
 }
 
-.product-card .product-group:last-child {
+product-card .product-group:last-child {
   margin-bottom: 0;
 }
 
 /* Название товара */
-.product-card h4 {
+product-card h4 {
   margin: 0 0 10px;
   font-size: 1.2em;
+  text-align: center;
   width: 100%;
-  color: #000;
-  text-align: center; /* Центрируем заголовок */
 }
 
 /* Описание товара */
-.product-card .description {
-  font-size: 14px;
+product-card .description {
+  font-size: 15px;
   color: #555;
   margin-bottom: 15px;
+  text-align: center;
   line-height: 1.5;
   width: 100%;
-  text-align: center; /* Центрируем описание */
 }
 
 /* Размеры товара */
-.product-card .product-sizes {
+product-card .product-sizes {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 15px;
   width: 100%;
-  align-items: center; /* Центрируем размеры */
+  align-items: center;
 }
 
-.product-card .size-item {
+product-card .size-item {
   display: flex;
+  justify-content: center;
   font-size: 14px;
+  text-align: center;
   width: 100%;
-  justify-content: center; /* Центрируем текст размеров */
 }
 
 /* Материал товара */
-.product-card .product-material {
+product-card .product-material {
   width: 100%;
+  text-align: center;
   margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 15px;
   color: #555;
   display: flex;
-  gap: 5px;
-  justify-content: center; /* Центрируем материал */
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
-.product-card .material-label {
+product-card .material-label {
   font-weight: bold;
 }
 
 /* Стили для статуса товара */
-.product-card .status {
+product-card .status {
   font-size: 14px;
   font-weight: bold;
   padding: 4px 8px;
   border-radius: 4px;
   margin-bottom: 10px;
   width: 100%;
-  text-align: center; /* Центрируем статус */
+  text-align: center;
 }
 
-.product-card .status.in-stock {
+product-card .status.in-stock {
   color: #4CAF50;
   background-color: rgba(76, 175, 80, 0.1);
 }
 
-.product-card .status.soon {
+product-card .status.soon {
   color: #FF9800;
   background-color: rgba(255, 152, 0, 0.1);
 }
 
-.product-card .status.out-of-stock {
+product-card .status.out-of-stock {
   color: #F44336;
   background-color: rgba(244, 67, 54, 0.1);
 }
 
 /* Цена товара - жирный шрифт */
-.product-card .product-price {
+product-card .product-price {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 15px;
-  color: #000;
-  text-align: center; /* Центрируем цену */
 }
 
 /* Группа управления (статус, цена, кнопки) */
-.product-card .control-group {
+product-card .control-group {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   gap: 10px;
-  align-items: center; /* Центрируем элементы управления */
 }
 
 /* Кнопки +/- */
@@ -483,15 +444,14 @@ header {
   color: white;
   font-weight: bold;
   border: none;
-  border-radius: 6px;
-  padding: 10px 15px;
+  border-radius: 8px;
+  padding: 12px 20px;
   cursor: pointer;
   font-size: 16px;
   transition: background 0.3s;
   text-align: center;
   display: inline-block;
   width: 100%;
-  max-width: 200px; /* Ограничиваем ширину кнопки */
   box-sizing: border-box;
 }
 
@@ -504,22 +464,22 @@ header {
   cursor: not-allowed;
 }
 
-/* Корзина - ОБНОВЛЕННЫЕ СТИЛИ */
+/* Корзина - ОБНОВЛЕННЫЕ СТИЛИ С ГАРАНТИЕЙ ОТОБРАЖЕНИЯ РАЗМЕРОВ */
 .cart-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  gap: 25px;
+  gap: 30px;
   flex: 1;
 }
 .cart, .order-form {
   background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px;
+  border-radius: 12px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
 .cart-item {
@@ -542,7 +502,6 @@ header {
   flex: 1;
   min-width: 0;
   overflow: hidden;
-  text-align: center; /* Центрируем текст в корзине */
 }
 
 .cart-item .item-name {
@@ -551,7 +510,6 @@ header {
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 3px;
-  color: #000;
 }
 
 .cart-item .item-size {
@@ -560,6 +518,7 @@ header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block; /* Гарантированное отображение */
 }
 
 .cart-item .item-price {
@@ -572,13 +531,12 @@ header {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  justify-content: center; /* Центрируем элементы управления */
 }
 
 .cart-item .quantity-controls {
   display: flex;
   align-items: center;
-  margin: 0 8px;
+  margin: 0 10px;
 }
 
 .cart-item .quantity-btn {
@@ -620,8 +578,6 @@ header {
 #cart-total {
   font-weight: bold;
   font-size: 1.2em;
-  color: #000;
-  text-align: center; /* Центрируем итоговую сумму */
 }
 
 /* Форма заказа */
@@ -664,7 +620,6 @@ header {
   border-radius: 8px;
   box-sizing: border-box;
   transition: all 0.3s;
-  color: #000;
 }
 
 .order-form select {
@@ -693,7 +648,7 @@ header {
 /* Компактный футер */
 footer {
   background: #d4edc9;
-  padding: 10px 5px;
+  padding: 8px 5px;
   text-align: center;
   font-size: 0.9em;
   margin-top: auto;
@@ -706,7 +661,6 @@ footer {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  color: #000;
 }
 
 footer .separator {
@@ -754,7 +708,7 @@ footer .separator {
   }
   
   footer {
-    padding: 8px 5px;
+    padding: 6px 5px;
     font-size: 0.85em;
   }
   
@@ -772,25 +726,14 @@ footer .separator {
   }
   
   .product-card {
-    padding: 15px;
+    padding: 20px;
     width: 100%;
-    max-width: 260px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  /* Центрирование для всех режимов в мобильной версии */
-  .grid-view .products-group,
-  .list-view .products-group,
-  .horizontal-view .products-group {
-    justify-content: center;
-    align-items: center;
+    max-width: 280px;
   }
   
   .list-view .product-card {
     flex-direction: column;
     text-align: center;
-    align-items: center;
   }
   
   .list-view .product-card img {
@@ -817,8 +760,6 @@ footer .separator {
   .product-card .size-item {
     flex-direction: column;
     gap: 3px;
-    justify-content: center;
-    align-items: center;
   }
   
   .horizontal-view .category-title {
@@ -826,7 +767,7 @@ footer .separator {
   }
   
   .horizontal-view .product-card {
-    padding: 15px;
+    padding: 20px;
   }
   
   .category-title {
@@ -841,19 +782,16 @@ footer .separator {
     gap: 8px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    flex-direction: column; /* Вертикальное расположение в корзине */
-    align-items: center; /* Центрируем элементы корзины */
   }
   
   .cart-item img {
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
   }
   
   .cart-item .item-info {
-    min-width: 100%;
-    margin-right: 0;
-    text-align: center;
+    min-width: 120px;
+    margin-right: 5px;
   }
   
   .cart-item .item-name {
@@ -869,65 +807,15 @@ footer .separator {
   }
   
   .cart-item .quantity-controls {
-    margin: 10px 0;
+    margin: 0 5px;
   }
   
   .cart-item .quantity-input {
-    width: 40px;
+    width: 30px;
   }
   
   .cart-item .remove-item {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-  
-  /* Адаптация для grid-режима на мобильных */
-  .grid-view .product-card {
-    flex-direction: column; /* Вертикальное расположение на мобильных */
-    text-align: center;
-    align-items: center;
-    padding: 15px;
-  }
-  
-  .grid-view .product-card img {
-    width: 100%;
-    height: auto;
-    max-height: 200px;
-    margin-right: 0;
-    margin-bottom: 15px;
-  }
-  
-  .grid-view .product-card .card-content {
-    align-items: center;
-    text-align: center;
-  }
-  
-  .grid-view .product-card .product-group,
-  .grid-view .product-card .product-sizes,
-  .grid-view .product-card .product-material,
-  .grid-view .product-card .control-group {
-    align-items: center;
-    text-align: center;
-  }
-  
-  .grid-view .product-card .size-item {
-    justify-content: center;
-  }
-  
-  .grid-view .product-card .quantity-controls {
-    justify-content: center;
-  }
-  
-  /* Центрирование для всех текстовых элементов */
-  .grid-view .product-card h4,
-  .grid-view .product-card .description,
-  .grid-view .product-card .product-price {
-    text-align: center;
-  }
-  
-  /* Центрирование кнопки "Добавить в корзину" */
-  .grid-view .product-card .btn-primary {
-    margin: 0 auto;
+    margin-left: 3px;
   }
 }
 
@@ -965,44 +853,4 @@ select:focus {
   outline: none;
   border-color: #4a90e2;
   box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
-}
-
-/* Стили для свёрнутых категорий */
-.category-container {
-  margin-bottom: 30px;
-}
-
-/* Для ПК: горизонтальное расположение картинки и текста */
-@media (min-width: 601px) {
-  .category-content {
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 30px;
-  }
-  
-  .category-info {
-    margin-left: 0;
-    text-align: left;
-    align-items: flex-start;
-  }
-  
-  .grid-view .products-group {
-    justify-content: center;
-  }
-  
-  /* Центрирование текста в grid-режиме */
-  .grid-view .product-card .card-content {
-    text-align: left; /* На ПК текст слева */
-  }
-  
-  .grid-view .product-card h4,
-  .grid-view .product-card .description,
-  .grid-view .product-card .product-price {
-    text-align: left; /* На ПК текст слева */
-  }
-  
-  .grid-view .product-card .product-sizes,
-  .grid-view .product-card .product-material {
-    justify-content: flex-start; /* На ПК выравнивание по левому краю */
-  }
 }
