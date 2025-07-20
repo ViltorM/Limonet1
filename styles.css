@@ -476,6 +476,11 @@ header {
   box-sizing: border-box;
 }
 
+/* ← Вставь прямо здесь: */
+.submit-button {
+  color: white;
+}
+
 .btn-primary:hover {
   background: #45a049;
 }
