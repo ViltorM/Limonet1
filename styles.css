@@ -119,9 +119,6 @@ header {
 /* Контейнеры категорий */
 .category-container {
   margin-bottom: 50px;
-  width: 95%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Общий стиль заголовка категории */
@@ -131,7 +128,9 @@ header {
   padding-bottom: 10px;
   border-bottom: 2px solid #4CAF50;
   font-size: 1.5em;
-  width: 100%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
   box-sizing: border-box;
 }
 
@@ -485,11 +484,10 @@ header {
 
 .cart-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 10px;
   border-bottom: 1px solid #eee;
   gap: 10px;
-  position: relative;
 }
 
 .cart-item img {
@@ -506,17 +504,11 @@ header {
 
 .cart-item .item-controls {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: absolute;
-  right: 10px;
-  top: 10px;
+  align-items: center;
 }
 
 .cart-item .quantity-controls {
-  margin: 0 0 5px 0;
-  display: flex;
-  align-items: center;
+  margin: 0 10px;
 }
 
 #cart-items {
@@ -525,7 +517,6 @@ header {
   margin: 15px 0;
   max-height: 300px;
   overflow-y: auto;
-  width: 100%;
 }
 
 #cart-total {
@@ -725,27 +716,24 @@ footer .separator {
   
   .category-title {
     font-size: 1.3em;
-    width: 100%;
+    width: 95%;
   }
   
-  /* Корзина в мобильной версии */
+  /* Фикс для мобильной корзины */
   .cart-item {
     flex-wrap: wrap;
-    padding-top: 40px; /* Чтобы было место для кнопки удаления */
+    position: relative;
+    padding-top: 40px;
   }
   
   .cart-item .item-info {
-    padding-right: 0;
     flex: 0 0 100%;
     margin-bottom: 10px;
   }
   
   .cart-item .item-controls {
-    position: static;
     width: 100%;
     justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
   }
   
   .cart-item .remove-item {
